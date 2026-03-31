@@ -10,3 +10,5 @@ export interface User {
   lastLogin?: Date;
   createdAt: Date;
 }
+
+export type UserFormData = Omit<User, 'id' | 'createdAt' | 'lastLogin'>;

@@ -1,4 +1,5 @@
 export type JsonSchemaType = 'string' | 'number' | 'boolean' | 'integer';
+export const DEFAULT_FIELD_ORDER = 999;
 
 export type JsonSchemaFormat =
   | 'email'

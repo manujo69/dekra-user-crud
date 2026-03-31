@@ -1,0 +1,19 @@
+<!-- src/app/user/ui/pages/user-form/user-form.component.html -->
+
+<div class="container">
+  @if (loading() && isEditMode()) {
+    <div class="loading">
+      <p>Loading user data...</p>
+    </div>
+  } @else {
+    <dul-dynamic-form
+      [schema]="formSchema"
+      [initialValues]="userData()"
+      [submitLabel]="isEditMode() ? 'Update User' : 'Create User'"
+      [showCancel]="true"
+      [cancelLabel]="'Back to List'"
+      (formSubmit)="onSubmit($event)"
+      (formCancel)="onCancel()"
+    />
+  }
+</div>

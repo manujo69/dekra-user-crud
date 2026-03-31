@@ -1,5 +1,3 @@
-// src/app/app.routes.ts
-
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
@@ -10,7 +8,11 @@ export const routes: Routes = [
   },
   {
     path: 'users',
-    loadComponent: () => import('./user/ui/pages/user-list/user-list.component')
-      .then(m => m.UserListComponent)
+    loadChildren: () => import('./user/user.routes')
+      .then(m => m.USER_ROUTES)
+  },
+  {
+    path: '**',
+    redirectTo: '/users'
   }
 ];
