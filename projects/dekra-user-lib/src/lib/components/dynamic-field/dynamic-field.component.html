@@ -1,0 +1,24 @@
+@if (config.type === 'boolean') {
+  <mat-checkbox [formControl]="control">
+    {{ config.title }}
+  </mat-checkbox>
+} @else {
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ config.title }}</mat-label>
+
+    <input
+      matInput
+      [type]="getInputType()"
+      [formControl]="control"
+      [placeholder]="config.placeholder || ''"
+    />
+
+    @if (config.description && !control.errors) {
+      <mat-hint>{{ config.description }}</mat-hint>
+    }
+
+    @if (control.invalid && control.touched) {
+      <mat-error>{{ getErrorMessage() }}</mat-error>
+    }
+  </mat-form-field>
+}
