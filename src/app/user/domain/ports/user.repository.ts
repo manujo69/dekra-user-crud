@@ -1,10 +1,10 @@
 import { Observable } from "rxjs";
-import { User } from "../models/user.model";
+import { User, UserFormData } from "../models/user.model";
 
 export abstract class UserRepository {
   abstract getAll(): Observable<User[]>;
   abstract getById(id: string): Observable<User>;
-  abstract create(user: Omit<User, 'id' | 'createdAt'>): Observable<User>;
-  abstract update(id: string, user: Partial<User>): Observable<User>;
+  abstract create(userData: UserFormData): Observable<User>;
+  abstract update(id: string, userData: Partial<UserFormData>): Observable<User>;
   abstract delete(id: string): Observable<boolean>;
 }

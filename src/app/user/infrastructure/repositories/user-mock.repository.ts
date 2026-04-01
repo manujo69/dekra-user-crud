@@ -4,7 +4,7 @@ import { Injectable, signal } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { UserRepository } from '../../domain/ports/user.repository';
-import { User } from '../../domain/models/user.model';
+import { User, UserFormData } from '../../domain/models/user.model';
 
 @Injectable()
 export class UserMockRepository extends UserRepository {
@@ -61,9 +61,10 @@ export class UserMockRepository extends UserRepository {
     return of(user).pipe(delay(200));
   }
 
-  create(userData: Omit<User, 'id' | 'createdAt'>): Observable<User> {
+  create(userData: UserFormData): Observable<User> {
     const newUser: User = {
       ...userData,
+      password: 'PENDING_ACTIVATION',
       id: crypto.randomUUID(),
       createdAt: new Date()
     };
@@ -73,7 +74,7 @@ export class UserMockRepository extends UserRepository {
     return of(newUser).pipe(delay(400));
   }
 
-  update(id: string, userData: Partial<User>): Observable<User> {
+  update(id: string, userData: Partial<UserFormData>): Observable<User> {
     const index = this.users().findIndex(u => u.id === id);
 
     if (index === -1) {

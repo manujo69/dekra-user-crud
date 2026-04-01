@@ -11,4 +11,4 @@ export interface User {
   createdAt: Date;
 }
 
-export type UserFormData = Omit<User, 'id' | 'createdAt' | 'lastLogin'>;
+export type UserFormData = Omit<User, 'id' | 'password' | 'createdAt' | 'lastLogin'>;

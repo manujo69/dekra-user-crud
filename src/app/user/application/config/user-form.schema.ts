@@ -54,19 +54,6 @@ export const USER_FORM_SCHEMA: FormSchema = {
       },
       order: 4
     },
-    password: {
-      type: 'string',
-      title: 'Password',
-      format: 'password',
-      minLength: 8,
-      placeholder: 'Enter password',
-      description: 'Minimum 8 characters',
-      errorMessage: {
-        required: 'Password is required',
-        minlength: 'Password must be at least 8 characters'
-      },
-      order: 5
-    },
     age: {
       type: 'number',
       title: 'Age',
@@ -88,5 +75,5 @@ export const USER_FORM_SCHEMA: FormSchema = {
       order: 7
     }
   },
-  required: ['username', 'name', 'surnames', 'email', 'password', 'age']
+  required: ['username', 'name', 'surnames', 'email', 'age']
 };

@@ -6,8 +6,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 import { UserRepository } from '../../../domain/ports/user.repository';
 import { User } from '../../../domain/models/user.model';
+import { ConfirmDialogComponent } from '../../../../shared/ui/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-user-detail',
@@ -28,6 +31,8 @@ export class UserDetailComponent implements OnInit {
   private userRepository = inject(UserRepository);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private snackBar = inject(MatSnackBar);
+  private dialog = inject(MatDialog);
 
   user = signal<User | null>(null);
   loading = signal(true);
@@ -52,7 +57,7 @@ export class UserDetailComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error loading user:', err);
-        alert('User not found');
+        this.snackBar.open('User not found', 'Close', { duration: 4000 });
         this.router.navigate(['/users']);
       }
     });
@@ -73,16 +78,27 @@ export class UserDetailComponent implements OnInit {
     const user = this.user();
     if (!user) return;
 
-    if (confirm(`Are you sure you want to delete user "${user.username}"?`)) {
+    const ref = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Delete user',
+        message: `Are you sure you want to delete "${user.username}"?`,
+        confirmLabel: 'Delete'
+      }
+    });
+
+    ref.afterClosed().subscribe(confirmed => {
+      if (!confirmed) return;
+
       this.userRepository.delete(user.id).subscribe({
         next: () => {
+          this.snackBar.open('User deleted', 'Close', { duration: 3000 });
           this.router.navigate(['/users']);
         },
         error: (err) => {
           console.error('Error deleting user:', err);
-          alert('Error deleting user');
+          this.snackBar.open('Error deleting user', 'Close', { duration: 4000 });
         }
       });
-    }
+    });
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DynamicFormComponent } from 'dekra-user-lib';
 import { UserRepository } from '../../../domain/ports/user.repository';
 import { User, UserFormData } from '../../../domain/models/user.model';
@@ -17,12 +18,13 @@ export class UserFormComponent implements OnInit {
   private userRepository = inject(UserRepository);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private snackBar = inject(MatSnackBar);
 
   formSchema = USER_FORM_SCHEMA;
   isEditMode = signal(false);
   userId = signal<string | null>(null);
   loading = signal(false);
-  userData = signal<Partial<UserFormData> | undefined>(undefined);
+  userData = signal<Partial<UserFormData>>({});
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
@@ -44,7 +46,7 @@ export class UserFormComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error loading user:', err);
-        alert('User not found');
+        this.snackBar.open('User not found', 'Close', { duration: 4000 });
         this.router.navigate(['/users']);
       }
     });
@@ -62,13 +64,13 @@ export class UserFormComponent implements OnInit {
 
   createUser(formData: UserFormData) {
     this.userRepository.create(formData).subscribe({
-      next: (user) => {
-        console.log('User created:', user);
+      next: () => {
+        this.snackBar.open('User created', 'Close', { duration: 3000 });
         this.router.navigate(['/users']);
       },
       error: (err) => {
         console.error('Error creating user:', err);
-        alert('Error creating user');
+        this.snackBar.open('Error creating user', 'Close', { duration: 4000 });
         this.loading.set(false);
       }
     });
@@ -76,13 +78,13 @@ export class UserFormComponent implements OnInit {
 
   updateUser(id: string, formData: UserFormData) {
     this.userRepository.update(id, formData).subscribe({
-      next: (user) => {
-        console.log('User updated:', user);
+      next: () => {
+        this.snackBar.open('User updated', 'Close', { duration: 3000 });
         this.router.navigate(['/users']);
       },
       error: (err) => {
         console.error('Error updating user:', err);
-        alert('Error updating user');
+        this.snackBar.open('Error updating user', 'Close', { duration: 4000 });
         this.loading.set(false);
       }
     });
@@ -98,7 +100,6 @@ export class UserFormComponent implements OnInit {
       name: user.name,
       surnames: user.surnames,
       email: user.email,
-      password: user.password,
       age: user.age,
       active: user.active
     };
