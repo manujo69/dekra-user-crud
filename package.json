@@ -8,12 +8,15 @@
     "build-lib": "ng build dekra-user-lib",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "test:coverage": "ng test dekra-user-crud --watch=false --browsers=ChromeHeadless --code-coverage && open-cli coverage/dekra-user-crud/index.html",
+    "test:coverage": "ng test dekra-user-crud --watch=false --browsers=ChromeHeadless --code-coverage",
+    "test:coverage:open": "npm run test:coverage && open-cli coverage/dekra-user-crud/index.html",
     "test-lib": "ng test dekra-user-lib --watch=false --browsers=ChromeHeadless",
-    "test-lib:coverage": "ng test dekra-user-lib --watch=false --browsers=ChromeHeadless --code-coverage && open-cli coverage/dekra-user-lib/index.html",
+    "test-lib:coverage": "ng test dekra-user-lib --watch=false --browsers=ChromeHeadless --code-coverage",
+    "test-lib:coverage:open": "npm run test-lib:coverage && open-cli coverage/dekra-user-lib/index.html",
     "format": "prettier --write \"src/**/*.{ts,html,scss,css,json}\" \"projects/**/*.{ts,html,scss,css,json}\"",
     "format:check": "prettier --check \"src/**/*.{ts,html,scss,css,json}\" \"projects/**/*.{ts,html,scss,css,json}\"",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "prepare": "husky"
   },
   "private": true,
   "dependencies": {
@@ -37,6 +40,7 @@
     "@types/jasmine": "~5.1.0",
     "angular-eslint": "21.0.1",
     "eslint": "^9.39.1",
+    "husky": "^9.1.7",
     "jasmine-core": "~5.6.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",

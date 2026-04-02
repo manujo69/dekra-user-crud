@@ -101,7 +101,17 @@
               "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "coverageReporter": {
+              "check": {
+                "global": {
+                  "statements": 95,
+                  "branches": 95,
+                  "functions": 95,
+                  "lines": 95
+                }
+              }
+            }
           }
         },
         "lint": {
