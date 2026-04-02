@@ -1,5 +1,5 @@
 /*
- * Public API Surface of dekra-user-lib
+ * dekra-user-lib Public API
  */
 
 export * from './lib/models/form-schema.model';

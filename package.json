@@ -7,7 +7,12 @@
     "build": "ng build",
     "build-lib": "ng build dekra-user-lib",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+
+    "test": "ng test",
+    "test:coverage": "ng test dekra-user-crud --watch=false --browsers=ChromeHeadless --code-coverage && open-cli coverage/dekra-user-crud/index.html",
+
+    "test-lib": "ng test dekra-user-lib --watch=false --browsers=ChromeHeadless",
+    "test-lib:coverage": "ng test dekra-user-lib --watch=false --browsers=ChromeHeadless --code-coverage && open-cli coverage/dekra-user-lib/index.html"
   },
   "private": true,
   "dependencies": {
@@ -36,6 +41,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "ng-packagr": "^19.2.0",
+    "open-cli": "^9.0.0",
     "typescript": "~5.7.2"
   }
 }

@@ -129,10 +129,11 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
+            "main": "projects/dekra-user-lib/src/test.ts",
             "tsConfig": "projects/dekra-user-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/dekra-user-lib/karma.conf.js",
             "polyfills": [
-              "zone.js",
-              "zone.js/testing"
+              "zone.js"
             ]
           }
         }
