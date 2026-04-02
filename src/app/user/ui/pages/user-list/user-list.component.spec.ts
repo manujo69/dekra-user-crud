@@ -104,6 +104,7 @@ describe('UserListComponent', () => {
     });
 
     it('should show snackBar and set loading=false on error', () => {
+      spyOn(console, 'error');
       userRepository.getAll.and.returnValue(throwError(() => new Error('Network error')));
       fixture.detectChanges();
 
@@ -202,6 +203,7 @@ describe('UserListComponent', () => {
     });
 
     it('should show error snackBar when delete fails', () => {
+      spyOn(console, 'error');
       userRepository.delete.and.returnValue(throwError(() => new Error('Delete failed')));
 
       component.onDeleteUser(mockUsers[0]);

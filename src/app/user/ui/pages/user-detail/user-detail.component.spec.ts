@@ -78,6 +78,7 @@ describe('UserDetailComponent', () => {
     });
 
     it('should show snackBar and navigate to /users on load error', () => {
+      spyOn(console, 'error');
       userRepository.getById.and.returnValue(throwError(() => new Error('Not found')));
       fixture.detectChanges();
 
@@ -207,6 +208,7 @@ describe('UserDetailComponent', () => {
     });
 
     it('should show error snackBar when delete fails', () => {
+      spyOn(console, 'error');
       userRepository.delete.and.returnValue(throwError(() => new Error('Delete failed')));
       configureTestBed('1');
       fixture.detectChanges();

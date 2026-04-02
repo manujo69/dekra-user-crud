@@ -85,6 +85,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
+            "karmaConfig": "karma.conf.js",
             "polyfills": [
               "zone.js",
               "zone.js/testing"
@@ -101,17 +102,7 @@
               "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.scss"
             ],
-            "scripts": [],
-            "coverageReporter": {
-              "check": {
-                "global": {
-                  "statements": 95,
-                  "branches": 95,
-                  "functions": 95,
-                  "lines": 95
-                }
-              }
-            }
+            "scripts": []
           }
         },
         "lint": {

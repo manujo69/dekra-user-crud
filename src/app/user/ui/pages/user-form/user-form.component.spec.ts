@@ -122,6 +122,7 @@ describe('UserFormComponent', () => {
     });
 
     it('should show snackBar and navigate to /users on error', () => {
+      spyOn(console, 'error');
       userRepository.getById.and.returnValue(throwError(() => new Error('Not found')));
       fixture.detectChanges();
 
@@ -186,6 +187,7 @@ describe('UserFormComponent', () => {
     });
 
     it('should show error snackBar and set loading=false on error', () => {
+      spyOn(console, 'error');
       userRepository.create.and.returnValue(throwError(() => new Error('Create failed')));
 
       component.loading.set(true);
@@ -216,6 +218,7 @@ describe('UserFormComponent', () => {
     });
 
     it('should show error snackBar and set loading=false on error', () => {
+      spyOn(console, 'error');
       userRepository.update.and.returnValue(throwError(() => new Error('Update failed')));
 
       component.loading.set(true);
