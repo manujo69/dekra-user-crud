@@ -10,9 +10,7 @@
           <mat-card-title>
             <h1>{{ myUser.name }} {{ myUser.surnames }}</h1>
           </mat-card-title>
-          <mat-card-subtitle>
-            {{ '@' }}{{ myUser.username }}
-          </mat-card-subtitle>
+          <mat-card-subtitle> {{ '@' }}{{ myUser.username }} </mat-card-subtitle>
         </mat-card-header>
 
         <mat-card-content>
@@ -47,7 +45,7 @@
               <mat-icon>calendar_today</mat-icon>
               <div class="info-content">
                 <span class="label">Created</span>
-                <span class="value">{{ myUser.createdAt | date:'medium' }}</span>
+                <span class="value">{{ myUser.createdAt | date: 'medium' }}</span>
               </div>
             </div>
 
@@ -56,7 +54,7 @@
                 <mat-icon>login</mat-icon>
                 <div class="info-content">
                   <span class="label">Last Login</span>
-                  <span class="value">{{ myUser.lastLogin | date:'medium' }}</span>
+                  <span class="value">{{ myUser.lastLogin | date: 'medium' }}</span>
                 </div>
               </div>
             }

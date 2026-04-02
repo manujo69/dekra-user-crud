@@ -15,8 +15,8 @@ describe('ConfirmDialogComponent', () => {
       imports: [ConfirmDialogComponent],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: data },
-        { provide: MatDialogRef, useValue: dialogRef }
-      ]
+        { provide: MatDialogRef, useValue: dialogRef },
+      ],
     });
 
     fixture = TestBed.createComponent(ConfirmDialogComponent);

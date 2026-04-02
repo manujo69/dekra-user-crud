@@ -12,7 +12,7 @@ import { USER_FORM_SCHEMA } from '../../../application/config/user-form.schema';
   imports: [DynamicFormComponent],
   templateUrl: './user-form.component.html',
   styleUrl: './user-form.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserFormComponent implements OnInit {
   private userRepository = inject(UserRepository);
@@ -40,15 +40,15 @@ export class UserFormComponent implements OnInit {
     this.loading.set(true);
 
     this.userRepository.getById(id).subscribe({
-      next: (user) => {
+      next: user => {
         this.userData.set(this.mapUserToFormData(user));
         this.loading.set(false);
       },
-      error: (err) => {
+      error: err => {
         console.error('Error loading user:', err);
         this.snackBar.open('User not found', 'Close', { duration: 4000 });
         this.router.navigate(['/users']);
-      }
+      },
     });
   }
 
@@ -68,11 +68,11 @@ export class UserFormComponent implements OnInit {
         this.snackBar.open('User created', 'Close', { duration: 3000 });
         this.router.navigate(['/users']);
       },
-      error: (err) => {
+      error: err => {
         console.error('Error creating user:', err);
         this.snackBar.open('Error creating user', 'Close', { duration: 4000 });
         this.loading.set(false);
-      }
+      },
     });
   }
 
@@ -82,11 +82,11 @@ export class UserFormComponent implements OnInit {
         this.snackBar.open('User updated', 'Close', { duration: 3000 });
         this.router.navigate(['/users']);
       },
-      error: (err) => {
+      error: err => {
         console.error('Error updating user:', err);
         this.snackBar.open('Error updating user', 'Close', { duration: 4000 });
         this.loading.set(false);
-      }
+      },
     });
   }
 
@@ -101,7 +101,7 @@ export class UserFormComponent implements OnInit {
       surnames: user.surnames,
       email: user.email,
       age: user.age,
-      active: user.active
+      active: user.active,
     };
   }
 }

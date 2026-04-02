@@ -1,5 +1,5 @@
-import { Observable } from "rxjs";
-import { User, UserFormData } from "../models/user.model";
+import { Observable } from 'rxjs';
+import { User, UserFormData } from '../models/user.model';
 
 export abstract class UserRepository {
   abstract getAll(): Observable<User[]>;

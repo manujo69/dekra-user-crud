@@ -1,0 +1,23 @@
+// ─── Colors ───────────────────────────────────────────────────────────────────
+$color-text-primary: rgba(0, 0, 0, 0.87);
+$color-text-secondary: rgba(0, 0, 0, 0.6);
+$color-text-icon: rgba(0, 0, 0, 0.54);
+$color-border: rgba(0, 0, 0, 0.12);
+$color-divider: rgba(0, 0, 0, 0.06);
+
+// ─── Typography ───────────────────────────────────────────────────────────────
+$font-size-page-title: 28px;
+$font-weight-medium: 500;
+
+// ─── Spacing ──────────────────────────────────────────────────────────────────
+$container-padding: 24px;
+$icon-button-gap: 8px;
+$loading-min-height: 400px;
+
+// ─── Mixins ───────────────────────────────────────────────────────────────────
+@mixin loading-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: $loading-min-height;
+}

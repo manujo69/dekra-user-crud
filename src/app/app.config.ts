@@ -11,9 +11,9 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimationsAsync(),
-     {
+    {
       provide: UserRepository,
-      useClass: UserMockRepository
-    }
-  ]
+      useClass: UserMockRepository,
+    },
+  ],
 };

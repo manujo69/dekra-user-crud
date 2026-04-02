@@ -7,7 +7,7 @@ import { of, throwError, Subject } from 'rxjs';
 import { UserDetailComponent } from './user-detail.component';
 import { UserRepository } from '../../../domain/ports/user.repository';
 import { User } from '../../../domain/models/user.model';
-import { ConfirmDialogComponent } from '../../../../shared/ui/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 
 const mockUser: User = {
   id: '1',
@@ -18,7 +18,7 @@ const mockUser: User = {
   password: 'hashed',
   age: 30,
   active: true,
-  createdAt: new Date('2025-01-15')
+  createdAt: new Date('2025-01-15'),
 };
 
 describe('UserDetailComponent', () => {
@@ -36,12 +36,12 @@ describe('UserDetailComponent', () => {
         { provide: Router, useValue: router },
         {
           provide: ActivatedRoute,
-          useValue: { snapshot: { paramMap: { get: () => id } } }
+          useValue: { snapshot: { paramMap: { get: () => id } } },
         },
         { provide: UserRepository, useValue: userRepository },
         { provide: MatSnackBar, useValue: snackBar },
-        { provide: MatDialog, useValue: dialog }
-      ]
+        { provide: MatDialog, useValue: dialog },
+      ],
     });
     fixture = TestBed.createComponent(UserDetailComponent);
     component = fixture.componentInstance;
@@ -143,9 +143,9 @@ describe('UserDetailComponent', () => {
 
     beforeEach(() => {
       afterClosed$ = new Subject<boolean | undefined>();
-      dialog.open.and.returnValue(
-        { afterClosed: () => afterClosed$ } as unknown as MatDialogRef<ConfirmDialogComponent>
-      );
+      dialog.open.and.returnValue({
+        afterClosed: () => afterClosed$,
+      } as unknown as MatDialogRef<ConfirmDialogComponent>);
     });
 
     it('should do nothing when user signal is null', () => {
@@ -167,8 +167,8 @@ describe('UserDetailComponent', () => {
         data: {
           title: 'Delete user',
           message: `Are you sure you want to delete "jdoe"?`,
-          confirmLabel: 'Delete'
-        }
+          confirmLabel: 'Delete',
+        },
       });
     });
 
@@ -214,7 +214,9 @@ describe('UserDetailComponent', () => {
       component.onDelete();
       afterClosed$.next(true);
 
-      expect(snackBar.open).toHaveBeenCalledWith('Error deleting user', 'Close', { duration: 4000 });
+      expect(snackBar.open).toHaveBeenCalledWith('Error deleting user', 'Close', {
+        duration: 4000,
+      });
     });
   });
 });

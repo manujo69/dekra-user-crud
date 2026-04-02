@@ -21,7 +21,7 @@ export interface ConfirmDialogData {
         {{ data.confirmLabel ?? 'Confirm' }}
       </button>
     </mat-dialog-actions>
-  `
+  `,
 })
 export class ConfirmDialogComponent {
   data = inject<ConfirmDialogData>(MAT_DIALOG_DATA);

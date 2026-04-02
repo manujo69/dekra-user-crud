@@ -24,8 +24,8 @@ describe('DynamicFormComponent', () => {
       component.schema = {
         type: 'object',
         properties: {
-          last:   { type: 'string', order: 3 },
-          first:  { type: 'string', order: 1 },
+          last: { type: 'string', order: 3 },
+          first: { type: 'string', order: 1 },
           middle: { type: 'string', order: 2 },
         },
       };
@@ -36,18 +36,34 @@ describe('DynamicFormComponent', () => {
       expect(component.fields[2].key).toBe('last');
     });
 
-    it('should place fields without order after those with order (defaults to 999)', () => {
+    it('Case 1: should place fields without order after those with order (defaults to 999)', () => {
       component.schema = {
         type: 'object',
         properties: {
           noOrder: { type: 'string' },
-          first:   { type: 'string', order: 1 },
+          first: { type: 'string', order: 1 },
         },
       };
       component.ngOnInit();
 
       expect(component.fields[0].key).toBe('first');
       expect(component.fields[1].key).toBe('noOrder');
+    });
+
+    it('Case 2: should place fields without order after those with order (defaults to 999)', () => {
+      component.schema = {
+        type: 'object',
+        properties: {
+          nth: { type: 'string', order: 333 },
+          noOrder1: { type: 'string' },
+          noOrder2: { type: 'string' },
+        },
+      };
+      component.ngOnInit();
+
+      expect(component.fields[0].key).toBe('nth');
+      expect(component.fields[1].key).toBe('noOrder1');
+      expect(component.fields[2].key).toBe('noOrder2');
     });
   });
 

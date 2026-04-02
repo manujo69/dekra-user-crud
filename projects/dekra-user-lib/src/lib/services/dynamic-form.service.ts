@@ -3,15 +3,14 @@ import { FormGroup, FormControl, Validators, ValidatorFn } from '@angular/forms'
 import { FormSchema, JsonSchemaProperty } from '../models/form-schema.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DynamicFormService {
-
   /**
    * Builds a FormGroup based on a JSON schema
    */
   createFormFromSchema(schema: FormSchema): FormGroup {
-    const controls: { [key: string]: FormControl } = {};
+    const controls: Record<string, FormControl> = {};
 
     Object.keys(schema.properties).forEach(key => {
       const prop = schema.properties[key];

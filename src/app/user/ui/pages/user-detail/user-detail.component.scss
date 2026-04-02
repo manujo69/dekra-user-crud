@@ -1,28 +1,27 @@
+@use '../../../../shared/scss/common' as c;
+
 .container {
-  padding: 24px;
+  padding: c.$container-padding;
   max-width: 800px;
   margin: 0 auto;
 }
 
 .loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 400px;
+  @include c.loading-state;
 }
 
 mat-card {
   mat-card-header {
-    margin-bottom: 24px;
+    margin-bottom: c.$container-padding;
 
     h1 {
       margin: 0;
-      font-size: 28px;
-      font-weight: 500;
+      font-size: c.$font-size-page-title;
+      font-weight: c.$font-weight-medium;
     }
 
     mat-card-subtitle {
-      color: rgba(0, 0, 0, 0.6);
+      color: c.$color-text-secondary;
       font-size: 16px;
       margin-top: 4px;
     }
@@ -39,7 +38,7 @@ mat-card {
 
     button {
       mat-icon {
-        margin-right: 8px;
+        margin-right: c.$icon-button-gap;
       }
     }
   }
@@ -47,7 +46,7 @@ mat-card {
 
 .info-grid {
   display: grid;
-  gap: 24px;
+  gap: c.$container-padding;
 }
 
 .info-item {
@@ -56,7 +55,7 @@ mat-card {
   gap: 16px;
 
   mat-icon {
-    color: rgba(0, 0, 0, 0.54);
+    color: c.$color-text-icon;
     margin-top: 2px;
   }
 
@@ -68,15 +67,15 @@ mat-card {
 
     .label {
       font-size: 12px;
-      font-weight: 500;
+      font-weight: c.$font-weight-medium;
       text-transform: uppercase;
-      color: rgba(0, 0, 0, 0.6);
+      color: c.$color-text-secondary;
       letter-spacing: 0.5px;
     }
 
     .value {
       font-size: 16px;
-      color: rgba(0, 0, 0, 0.87);
+      color: c.$color-text-primary;
     }
   }
 }

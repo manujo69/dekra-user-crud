@@ -16,9 +16,9 @@ export const USER_FORM_SCHEMA: FormSchema = {
         required: 'Username is required',
         minlength: 'Username must be at least 3 characters',
         maxlength: 'Username cannot exceed 20 characters',
-        pattern: 'Only letters, numbers and underscore allowed'
+        pattern: 'Only letters, numbers and underscore allowed',
       },
-      order: 1
+      order: 1,
     },
     name: {
       type: 'string',
@@ -28,9 +28,9 @@ export const USER_FORM_SCHEMA: FormSchema = {
       maxLength: 50,
       errorMessage: {
         required: 'First name is required',
-        minlength: 'First name must be at least 2 characters'
+        minlength: 'First name must be at least 2 characters',
       },
-      order: 2
+      order: 2,
     },
     surnames: {
       type: 'string',
@@ -39,9 +39,9 @@ export const USER_FORM_SCHEMA: FormSchema = {
       minLength: 2,
       maxLength: 100,
       errorMessage: {
-        required: 'Last name is required'
+        required: 'Last name is required',
       },
-      order: 3
+      order: 3,
     },
     email: {
       type: 'string',
@@ -50,9 +50,9 @@ export const USER_FORM_SCHEMA: FormSchema = {
       placeholder: 'user@example.com',
       errorMessage: {
         required: 'Email is required',
-        email: 'Please enter a valid email address'
+        email: 'Please enter a valid email address',
       },
-      order: 4
+      order: 4,
     },
     age: {
       type: 'number',
@@ -63,17 +63,17 @@ export const USER_FORM_SCHEMA: FormSchema = {
       errorMessage: {
         required: 'Age is required',
         min: 'Must be at least 18 years old',
-        max: 'Please enter a valid age'
+        max: 'Please enter a valid age',
       },
-      order: 6
+      order: 6,
     },
     active: {
       type: 'boolean',
       title: 'Active User',
       default: true,
       description: 'Is this user account active?',
-      order: 7
-    }
+      order: 7,
+    },
   },
-  required: ['username', 'name', 'surnames', 'email', 'age']
+  required: ['username', 'name', 'surnames', 'email', 'age'],
 };

@@ -39,6 +39,12 @@
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",
@@ -97,6 +103,15 @@
             ],
             "scripts": []
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     },
@@ -104,7 +119,7 @@
       "projectType": "library",
       "root": "projects/dekra-user-lib",
       "sourceRoot": "projects/dekra-user-lib/src",
-       "schematics": {
+      "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
@@ -135,6 +150,16 @@
             "polyfills": [
               "zone.js"
             ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/dekra-user-lib/**/*.ts",
+              "projects/dekra-user-lib/**/*.html"
+            ],
+            "eslintConfig": "projects/dekra-user-lib/eslint.config.js"
           }
         }
       }

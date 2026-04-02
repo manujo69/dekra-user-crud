@@ -16,7 +16,7 @@ const mockUser: User = {
   password: 'hashed',
   age: 30,
   active: true,
-  createdAt: new Date('2025-01-15')
+  createdAt: new Date('2025-01-15'),
 };
 
 const mockFormData: UserFormData = {
@@ -25,7 +25,7 @@ const mockFormData: UserFormData = {
   surnames: 'Doe',
   email: 'john.doe@example.com',
   age: 30,
-  active: true
+  active: true,
 };
 
 describe('UserFormComponent', () => {
@@ -42,11 +42,11 @@ describe('UserFormComponent', () => {
         { provide: Router, useValue: router },
         {
           provide: ActivatedRoute,
-          useValue: { snapshot: { paramMap: { get: () => id } } }
+          useValue: { snapshot: { paramMap: { get: () => id } } },
         },
         { provide: UserRepository, useValue: userRepository },
-        { provide: MatSnackBar, useValue: snackBar }
-      ]
+        { provide: MatSnackBar, useValue: snackBar },
+      ],
     });
     fixture = TestBed.createComponent(UserFormComponent);
     component = fixture.componentInstance;
@@ -191,7 +191,9 @@ describe('UserFormComponent', () => {
       component.loading.set(true);
       component.createUser(mockFormData);
 
-      expect(snackBar.open).toHaveBeenCalledWith('Error creating user', 'Close', { duration: 4000 });
+      expect(snackBar.open).toHaveBeenCalledWith('Error creating user', 'Close', {
+        duration: 4000,
+      });
       expect(component.loading()).toBeFalse();
     });
   });
@@ -219,7 +221,9 @@ describe('UserFormComponent', () => {
       component.loading.set(true);
       component.updateUser('1', mockFormData);
 
-      expect(snackBar.open).toHaveBeenCalledWith('Error updating user', 'Close', { duration: 4000 });
+      expect(snackBar.open).toHaveBeenCalledWith('Error updating user', 'Close', {
+        duration: 4000,
+      });
       expect(component.loading()).toBeFalse();
     });
   });

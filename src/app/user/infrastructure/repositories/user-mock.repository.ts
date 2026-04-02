@@ -9,7 +9,6 @@ import { users_mock } from './user-mock.data';
 
 @Injectable()
 export class UserMockRepository extends UserRepository {
-
   private users = signal<User[]>(users_mock);
 
   getAll(): Observable<User[]> {
@@ -31,7 +30,7 @@ export class UserMockRepository extends UserRepository {
       ...userData,
       password: 'PENDING_ACTIVATION',
       id: crypto.randomUUID(),
-      createdAt: new Date()
+      createdAt: new Date(),
     };
 
     this.users.update(users => [...users, newUser]);

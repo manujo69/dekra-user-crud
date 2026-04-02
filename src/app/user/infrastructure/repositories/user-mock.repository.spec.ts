@@ -7,7 +7,7 @@ describe('UserMockRepository', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [UserMockRepository]
+      providers: [UserMockRepository],
     });
     repository = TestBed.inject(UserMockRepository);
   });
@@ -38,7 +38,7 @@ describe('UserMockRepository', () => {
       surnames: 'User',
       email: 'new@example.com',
       age: 28,
-      active: true
+      active: true,
     };
 
     it('should return the created user with a generated id', fakeAsync(() => {

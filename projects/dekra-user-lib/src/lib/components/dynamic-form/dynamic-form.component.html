@@ -1,5 +1,4 @@
 <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
-
   @if (schema.title) {
     <h2>{{ schema.title }}</h2>
   }
@@ -9,31 +8,18 @@
   }
 
   @for (field of fields; track field.key) {
-    <dul-dynamic-field
-      [config]="field.property"
-      [control]="getControl(field.key)"
-    />
+    <dul-dynamic-field [config]="field.property" [control]="getControl(field.key)" />
   }
 
   <div class="form-actions">
-    <button
-      mat-raised-button
-      color="primary"
-      type="submit"
-      [disabled]="formGroup.invalid"
-    >
+    <button mat-raised-button color="primary" type="submit" [disabled]="formGroup.invalid">
       {{ submitLabel }}
     </button>
 
     @if (showCancel) {
-      <button
-        mat-button
-        type="button"
-        (click)="onCancel()"
-      >
+      <button mat-button type="button" (click)="onCancel()">
         {{ cancelLabel }}
       </button>
     }
   </div>
-
 </form>

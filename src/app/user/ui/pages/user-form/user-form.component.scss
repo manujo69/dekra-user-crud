@@ -1,5 +1,7 @@
+@use '../../../../shared/scss/common' as c;
+
 .container {
-  padding: 24px;
+  padding: c.$container-padding;
   max-width: 800px;
   margin: 0 auto;
 }

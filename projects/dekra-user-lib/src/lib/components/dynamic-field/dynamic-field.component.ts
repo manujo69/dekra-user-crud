@@ -16,11 +16,11 @@ import { JsonSchemaProperty } from '../../models/form-schema.model';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatCheckboxModule
+    MatCheckboxModule,
   ],
   templateUrl: './dynamic-field.component.html',
   styleUrl: './dynamic-field.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DynamicFieldComponent {
   @Input({ required: true }) config!: JsonSchemaProperty;
@@ -45,14 +45,14 @@ export class DynamicFieldComponent {
       return this.config.errorMessage[errorKey];
     }
 
-    const errorMap: { [key: string]: string } = {
+    const errorMap: Record<string, string> = {
       required: 'This field is required',
       email: 'Invalid email address',
       minlength: `Minimum ${this.control.errors['minlength']?.requiredLength} characters`,
       maxlength: `Maximum ${this.control.errors['maxlength']?.requiredLength} characters`,
       min: `Minimum value is ${this.control.errors['min']?.min}`,
       max: `Maximum value is ${this.control.errors['max']?.max}`,
-      pattern: 'Invalid format'
+      pattern: 'Invalid format',
     };
 
     return errorMap[errorKey] || 'Invalid value';

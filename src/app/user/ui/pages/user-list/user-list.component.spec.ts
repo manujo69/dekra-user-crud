@@ -7,7 +7,7 @@ import { of, throwError, Subject } from 'rxjs';
 import { UserListComponent } from './user-list.component';
 import { UserRepository } from '../../../domain/ports/user.repository';
 import { User } from '../../../domain/models/user.model';
-import { ConfirmDialogComponent } from '../../../../shared/ui/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 
 const mockUsers: User[] = [
   {
@@ -19,7 +19,7 @@ const mockUsers: User[] = [
     password: 'hashed1',
     age: 30,
     active: true,
-    createdAt: new Date('2025-01-15')
+    createdAt: new Date('2025-01-15'),
   },
   {
     id: '2',
@@ -30,8 +30,8 @@ const mockUsers: User[] = [
     password: 'hashed2',
     age: 25,
     active: false,
-    createdAt: new Date('2025-02-20')
-  }
+    createdAt: new Date('2025-02-20'),
+  },
 ];
 
 describe('UserListComponent', () => {
@@ -56,8 +56,8 @@ describe('UserListComponent', () => {
         { provide: Router, useValue: router },
         { provide: UserRepository, useValue: userRepository },
         { provide: MatSnackBar, useValue: snackBar },
-        { provide: MatDialog, useValue: dialog }
-      ]
+        { provide: MatDialog, useValue: dialog },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(UserListComponent);
@@ -72,7 +72,14 @@ describe('UserListComponent', () => {
   });
 
   it('should expose the expected displayedColumns', () => {
-    expect(component.displayedColumns).toEqual(['username', 'name', 'email', 'age', 'active', 'actions']);
+    expect(component.displayedColumns).toEqual([
+      'username',
+      'name',
+      'email',
+      'age',
+      'active',
+      'actions',
+    ]);
   });
 
   // ─── ngOnInit / loadUsers ─────────────────────────────────────────────────────
@@ -101,7 +108,9 @@ describe('UserListComponent', () => {
       fixture.detectChanges();
 
       expect(component.loading()).toBeFalse();
-      expect(snackBar.open).toHaveBeenCalledWith('Error loading users', 'Close', { duration: 4000 });
+      expect(snackBar.open).toHaveBeenCalledWith('Error loading users', 'Close', {
+        duration: 4000,
+      });
     });
 
     it('should reset loading=true and call getAll again when called directly', () => {
@@ -148,9 +157,9 @@ describe('UserListComponent', () => {
 
     beforeEach(() => {
       afterClosed$ = new Subject<boolean | undefined>();
-      dialog.open.and.returnValue(
-        { afterClosed: () => afterClosed$ } as unknown as MatDialogRef<ConfirmDialogComponent>
-      );
+      dialog.open.and.returnValue({
+        afterClosed: () => afterClosed$,
+      } as unknown as MatDialogRef<ConfirmDialogComponent>);
       fixture.detectChanges();
     });
 
@@ -161,8 +170,8 @@ describe('UserListComponent', () => {
         data: {
           title: 'Delete user',
           message: `Are you sure you want to delete "jdoe"?`,
-          confirmLabel: 'Delete'
-        }
+          confirmLabel: 'Delete',
+        },
       });
     });
 
@@ -198,17 +207,22 @@ describe('UserListComponent', () => {
       component.onDeleteUser(mockUsers[0]);
       afterClosed$.next(true);
 
-      expect(snackBar.open).toHaveBeenCalledWith('Error deleting user', 'Close', { duration: 4000 });
+      expect(snackBar.open).toHaveBeenCalledWith('Error deleting user', 'Close', {
+        duration: 4000,
+      });
     });
 
     it('should use the correct username in dialog message for any user', () => {
       component.onDeleteUser(mockUsers[1]);
 
-      expect(dialog.open).toHaveBeenCalledWith(ConfirmDialogComponent, jasmine.objectContaining({
-        data: jasmine.objectContaining({
-          message: `Are you sure you want to delete "asmith"?`
-        })
-      }));
+      expect(dialog.open).toHaveBeenCalledWith(
+        ConfirmDialogComponent,
+        jasmine.objectContaining({
+          data: jasmine.objectContaining({
+            message: `Are you sure you want to delete "asmith"?`,
+          }),
+        }),
+      );
     });
   });
 });
