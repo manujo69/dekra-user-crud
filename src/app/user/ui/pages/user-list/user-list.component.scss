@@ -29,6 +29,11 @@
   @include c.loading-state;
 }
 
+.filter-field {
+  width: 100%;
+  margin-bottom: c.$container-padding;
+}
+
 .table-container {
   overflow-x: auto;
 }

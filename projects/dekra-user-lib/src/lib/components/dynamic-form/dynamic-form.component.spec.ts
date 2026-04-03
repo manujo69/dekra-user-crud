@@ -67,6 +67,34 @@ describe('DynamicFormComponent', () => {
     });
   });
 
+  describe('submit button disabled state', () => {
+    const schema: FormSchema = {
+      type: 'object',
+      properties: { name: { type: 'string' } },
+    };
+
+    beforeEach(() => {
+      component.schema = schema;
+      component.ngOnInit();
+      fixture.detectChanges();
+    });
+
+    it('should be disabled when the form is pristine (no changes yet)', () => {
+      const button: HTMLButtonElement = fixture.nativeElement.querySelector('button[type="submit"]');
+
+      expect(button.disabled).toBeTrue();
+    });
+
+    it('should be enabled when the form is dirty and valid', () => {
+      component.formGroup.markAsDirty();
+      fixture.detectChanges();
+
+      const button: HTMLButtonElement = fixture.nativeElement.querySelector('button[type="submit"]');
+
+      expect(button.disabled).toBeFalse();
+    });
+  });
+
   describe('onSubmit', () => {
     const schema: FormSchema = {
       type: 'object',

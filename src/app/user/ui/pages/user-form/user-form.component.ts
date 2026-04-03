@@ -1,10 +1,11 @@
-import { Component, OnInit, inject, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, inject, signal, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DynamicFormComponent } from 'dekra-user-lib';
 import { UserRepository } from '../../../domain/ports/user.repository';
 import { User, UserFormData } from '../../../domain/models/user.model';
 import { USER_FORM_SCHEMA } from '../../../application/config/user-form.schema';
+import { HasUnsavedChanges } from '../../guards/unsaved-changes.guard';
 
 @Component({
   selector: 'app-user-form',
@@ -14,17 +15,24 @@ import { USER_FORM_SCHEMA } from '../../../application/config/user-form.schema';
   styleUrl: './user-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserFormComponent implements OnInit {
+export class UserFormComponent implements OnInit, HasUnsavedChanges {
   private userRepository = inject(UserRepository);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private snackBar = inject(MatSnackBar);
+
+  readonly dynamicForm = viewChild(DynamicFormComponent);
 
   formSchema = USER_FORM_SCHEMA;
   isEditMode = signal(false);
   userId = signal<string | null>(null);
   loading = signal(false);
   userData = signal<Partial<UserFormData>>({});
+  private submitted = signal(false);
+
+  isDirty(): boolean {
+    return !this.submitted() && (this.dynamicForm()?.formGroup.dirty ?? false);
+  }
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
@@ -65,6 +73,7 @@ export class UserFormComponent implements OnInit {
   createUser(formData: UserFormData) {
     this.userRepository.create(formData).subscribe({
       next: () => {
+        this.submitted.set(true);
         this.snackBar.open('User created', 'Close', { duration: 3000 });
         this.router.navigate(['/users']);
       },
@@ -79,6 +88,7 @@ export class UserFormComponent implements OnInit {
   updateUser(id: string, formData: UserFormData) {
     this.userRepository.update(id, formData).subscribe({
       next: () => {
+        this.submitted.set(true);
         this.snackBar.open('User updated', 'Close', { duration: 3000 });
         this.router.navigate(['/users']);
       },

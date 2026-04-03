@@ -1,7 +1,10 @@
-import { Component, OnInit, inject, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, inject, signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
+import { MatSortModule, Sort } from '@angular/material/sort';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
@@ -19,6 +22,9 @@ import { ConfirmDialogComponent } from '../../../../shared/components/confirm-di
   imports: [
     CommonModule,
     MatTableModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule,
     MatButtonModule,
     MatIconModule,
     MatChipsModule,
@@ -37,7 +43,45 @@ export class UserListComponent implements OnInit {
 
   users = signal<User[]>([]);
   loading = signal(true);
+  filterValue = signal('');
+  sortState = signal<Sort>({ active: '', direction: '' });
   displayedColumns = ['username', 'name', 'email', 'age', 'active', 'actions'];
+
+  displayedUsers = computed(() => {
+    const filter = this.filterValue().toLowerCase().trim();
+    const { active, direction } = this.sortState();
+
+    let result = this.users();
+
+    if (filter) {
+      result = result.filter(
+        u =>
+          u.username.toLowerCase().includes(filter) ||
+          u.name.toLowerCase().includes(filter) ||
+          u.surnames.toLowerCase().includes(filter) ||
+          u.email.toLowerCase().includes(filter),
+      );
+    }
+
+    if (active && direction) {
+      result = [...result].sort((a, b) => {
+        const valA = a[active as keyof User] ?? '';
+        const valB = b[active as keyof User] ?? '';
+        const cmp = valA < valB ? -1 : valA > valB ? 1 : 0;
+        return direction === 'asc' ? cmp : -cmp;
+      });
+    }
+
+    return result;
+  });
+
+  onFilter(value: string) {
+    this.filterValue.set(value);
+  }
+
+  onSortChange(sort: Sort) {
+    this.sortState.set(sort);
+  }
 
   ngOnInit() {
     this.loadUsers();

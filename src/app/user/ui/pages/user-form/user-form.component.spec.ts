@@ -244,6 +244,51 @@ describe('UserFormComponent', () => {
     });
   });
 
+  // ─── isDirty ─────────────────────────────────────────────────────────────────
+
+  describe('isDirty – before view initialization', () => {
+    it('should return false when the view is not yet initialized', () => {
+      configureTestBed(null);
+      // detectChanges not called — viewChild signal has no value yet
+      expect(component.isDirty()).toBeFalse();
+    });
+  });
+
+  describe('isDirty', () => {
+    beforeEach(() => {
+      configureTestBed(null);
+      fixture.detectChanges();
+    });
+
+    it('should return false when the form has not been modified', () => {
+      expect(component.isDirty()).toBeFalse();
+    });
+
+    it('should return true when the form has been modified', () => {
+      component.dynamicForm()!.formGroup.markAsDirty();
+
+      expect(component.isDirty()).toBeTrue();
+    });
+
+    it('should return false after a successful create even if the form is dirty', () => {
+      userRepository.create.and.returnValue(of(mockUser));
+      component.dynamicForm()!.formGroup.markAsDirty();
+
+      component.createUser(mockFormData);
+
+      expect(component.isDirty()).toBeFalse();
+    });
+
+    it('should return false after a successful update even if the form is dirty', () => {
+      userRepository.update.and.returnValue(of(mockUser));
+      component.dynamicForm()!.formGroup.markAsDirty();
+
+      component.updateUser('1', mockFormData);
+
+      expect(component.isDirty()).toBeFalse();
+    });
+  });
+
   // ─── mapUserToFormData ───────────────────────────────────────────────────────
 
   describe('mapUserToFormData (via loadUser)', () => {

@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Sort } from '@angular/material/sort';
 import { of, throwError, Subject } from 'rxjs';
 
 import { UserListComponent } from './user-list.component';
@@ -122,6 +123,103 @@ describe('UserListComponent', () => {
 
       expect(component.loading()).toBeFalse(); // resolved synchronously via of()
       expect(userRepository.getAll).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  // ─── displayedUsers – filtering ──────────────────────────────────────────────
+
+  describe('displayedUsers – filtering', () => {
+    beforeEach(() => fixture.detectChanges());
+
+    it('should return all users when the filter is empty', () => {
+      expect(component.displayedUsers()).toEqual(mockUsers);
+    });
+
+    it('should filter by username (case-insensitive)', () => {
+      component.onFilter('JDOE');
+      expect(component.displayedUsers()).toEqual([mockUsers[0]]);
+    });
+
+    it('should filter by name', () => {
+      component.onFilter('alice');
+      expect(component.displayedUsers()).toEqual([mockUsers[1]]);
+    });
+
+    it('should filter by surnames', () => {
+      component.onFilter('smith');
+      expect(component.displayedUsers()).toEqual([mockUsers[1]]);
+    });
+
+    it('should filter by email', () => {
+      component.onFilter('john.doe');
+      expect(component.displayedUsers()).toEqual([mockUsers[0]]);
+    });
+
+    it('should return empty array when no user matches', () => {
+      component.onFilter('zzz_no_match');
+      expect(component.displayedUsers()).toEqual([]);
+    });
+
+    it('should restore all users when filter is cleared', () => {
+      component.onFilter('jdoe');
+      component.onFilter('');
+      expect(component.displayedUsers()).toEqual(mockUsers);
+    });
+  });
+
+  // ─── displayedUsers – sorting ─────────────────────────────────────────────────
+
+  describe('displayedUsers – sorting', () => {
+    beforeEach(() => fixture.detectChanges());
+
+    it('should preserve original order when no sort is applied', () => {
+      expect(component.displayedUsers()).toEqual(mockUsers);
+    });
+
+    it('should sort by username ascending', () => {
+      // Users reversed so V8 comparator is called with (jdoe, asmith) → valA > valB branch
+      component.users.set([mockUsers[1], mockUsers[0]]);
+      component.onSortChange({ active: 'username', direction: 'asc' } as Sort);
+      expect(component.displayedUsers().map(u => u.username)).toEqual(['asmith', 'jdoe']);
+    });
+
+    it('should sort by username descending', () => {
+      component.onSortChange({ active: 'username', direction: 'desc' } as Sort);
+      expect(component.displayedUsers().map(u => u.username)).toEqual(['jdoe', 'asmith']);
+    });
+
+    it('should sort by age ascending', () => {
+      component.onSortChange({ active: 'age', direction: 'asc' } as Sort);
+      expect(component.displayedUsers().map(u => u.age)).toEqual([25, 30]);
+    });
+
+    it('should sort by age descending', () => {
+      component.onSortChange({ active: 'age', direction: 'desc' } as Sort);
+      expect(component.displayedUsers().map(u => u.age)).toEqual([30, 25]);
+    });
+
+    it('should restore original order when sort is cleared', () => {
+      component.onSortChange({ active: 'username', direction: 'asc' } as Sort);
+      component.onSortChange({ active: '', direction: '' } as Sort);
+      expect(component.displayedUsers()).toEqual(mockUsers);
+    });
+
+    it('should handle undefined field values by falling back to empty string', () => {
+      // lastLogin is optional (undefined for both mock users) → ?? '' branch
+      component.onSortChange({ active: 'lastLogin', direction: 'asc' } as Sort);
+      expect(component.displayedUsers()).toEqual(mockUsers);
+    });
+
+    it('should preserve relative order when two users have equal values (asc)', () => {
+      component.users.set([{ ...mockUsers[0], age: 30 }, { ...mockUsers[1], age: 30 }]);
+      component.onSortChange({ active: 'age', direction: 'asc' } as Sort);
+      expect(component.displayedUsers().map(u => u.age)).toEqual([30, 30]);
+    });
+
+    it('should preserve relative order when two users have equal values (desc)', () => {
+      component.users.set([{ ...mockUsers[0], age: 30 }, { ...mockUsers[1], age: 30 }]);
+      component.onSortChange({ active: 'age', direction: 'desc' } as Sort);
+      expect(component.displayedUsers().map(u => u.age)).toEqual([30, 30]);
     });
   });
 
