@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "preinstall": "node ./scripts/check-volta.js",
     "build-lib": "ng build dekra-user-lib",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
