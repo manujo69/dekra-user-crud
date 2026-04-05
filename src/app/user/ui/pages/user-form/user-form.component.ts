@@ -13,7 +13,7 @@ import { User, UserFormData } from '@user/domain/user.model';
 import { getUserFormSchema } from '@user/application/user-form.schema';
 import { HasUnsavedChanges } from '@user/ui/guards/unsaved-changes.guard';
 import { UserRepository } from '@user/domain/user.repository';
-import { USER_MESSAGES } from '@user/constants/user-messages';
+import { USER_MESSAGES } from '@user/user-messages';
 
 @Component({
   selector: 'app-user-form',

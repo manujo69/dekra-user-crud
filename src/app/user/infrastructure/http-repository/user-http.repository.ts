@@ -7,7 +7,7 @@ import { User, UserFormData } from '@user/domain/user.model';
 import { UserRepository } from '@user/domain/user.repository';
 import { UserDto } from './user-http.dto';
 import { UserMapper } from './user.mapper';
-import { USER_MESSAGES } from '@user/constants/user-messages';
+import { USER_MESSAGES } from '@user/user-messages';
 
 @Injectable()
 export class UserHttpRepository extends UserRepository {

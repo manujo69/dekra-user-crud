@@ -4,7 +4,7 @@ import { delay } from 'rxjs/operators';
 import { UserRepository } from '@user/domain/user.repository';
 import { User, UserFormData } from '@user/domain/user.model';
 import { users_mock } from './user-mock.data';
-import { MOCK_DEFAULTS, USER_MESSAGES } from '@user/constants/user-messages';
+import { MOCK_DEFAULTS, USER_MESSAGES } from '@user/user-messages';
 
 // Artificial delays simulate real network latency and help surface
 // race conditions or loading-state issues during development.

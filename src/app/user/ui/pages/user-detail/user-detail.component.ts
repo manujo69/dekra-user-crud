@@ -10,7 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { UserRepository } from '@user/domain/user.repository';
 import { User } from '@user/domain/user.model';
-import { USER_MESSAGES } from '@user/constants/user-messages';
+import { USER_MESSAGES } from '@user/user-messages';
 import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
