@@ -1,5 +1,5 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { UserMockRepository } from './user-mock.repository';
+import { UserMockRepository, MOCK_DELAY_MS } from './user-mock.repository';
 import { User, UserFormData } from '@user/domain/user.model';
 
 describe('UserMockRepository', () => {
@@ -17,7 +17,7 @@ describe('UserMockRepository', () => {
       let result: User | undefined;
 
       repository.getById('1').subscribe(user => (result = user));
-      tick(400);
+      tick(MOCK_DELAY_MS);
 
       expect(result?.username).toBe('jdoe');
     }));
@@ -45,7 +45,7 @@ describe('UserMockRepository', () => {
       let created: User | undefined;
 
       repository.create(newUserData).subscribe(user => (created = user));
-      tick(400);
+      tick(MOCK_DELAY_MS);
 
       expect(created?.id).toBeTruthy();
     }));
@@ -54,18 +54,18 @@ describe('UserMockRepository', () => {
       let created: User | undefined;
 
       repository.create(newUserData).subscribe(user => (created = user));
-      tick(400);
+      tick(MOCK_DELAY_MS);
 
       expect(created?.password).toBe('PENDING_ACTIVATION');
     }));
 
     it('should add the new user to the list', fakeAsync(() => {
       repository.create(newUserData).subscribe();
-      tick(400);
+      tick(MOCK_DELAY_MS);
 
       let users: User[] = [];
       repository.getAll().subscribe(u => (users = u));
-      tick(400);
+      tick(MOCK_DELAY_MS);
 
       expect(users.length).toBe(4);
       expect(users.find(u => u.username === 'newuser')).toBeTruthy();
@@ -77,7 +77,7 @@ describe('UserMockRepository', () => {
       let updated: User | undefined;
 
       repository.update('1', { name: 'Johnny' }).subscribe(user => (updated = user));
-      tick(400);
+      tick(MOCK_DELAY_MS);
 
       expect(updated?.name).toBe('Johnny');
       expect(updated?.username).toBe('jdoe');
@@ -95,11 +95,11 @@ describe('UserMockRepository', () => {
   describe('delete', () => {
     it('should remove the user from the list', fakeAsync(() => {
       repository.delete('1').subscribe();
-      tick(400);
+      tick(MOCK_DELAY_MS);
 
       let users: User[] = [];
       repository.getAll().subscribe(u => (users = u));
-      tick(400);
+      tick(MOCK_DELAY_MS);
 
       expect(users.find(u => u.id === '1')).toBeUndefined();
       expect(users.length).toBe(2);

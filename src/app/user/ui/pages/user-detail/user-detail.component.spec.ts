@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -180,7 +180,7 @@ describe('UserDetailComponent', () => {
 
       component.onDelete();
       afterClosed$.next(true);
-      tick(300);
+      flush();
 
       expect(userRepository.delete).toHaveBeenCalledWith('1');
       expect(snackBar.open).toHaveBeenCalledWith('User deleted', 'Close', { duration: 3000 });

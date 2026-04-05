@@ -8,7 +8,7 @@ import { MOCK_DEFAULTS, USER_MESSAGES } from '@user/constants/user-messages';
 
 // Artificial delays simulate real network latency and help surface
 // race conditions or loading-state issues during development.
-const MOCK_DELAY_MS = 400;
+export const MOCK_DELAY_MS = 400;
 
 @Injectable()
 export class UserMockRepository extends UserRepository {
