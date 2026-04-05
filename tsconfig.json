@@ -3,13 +3,13 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "types": [
-      "jasmine"
-    ],
+
+    "types": ["jasmine"],
     "paths": {
-      "dekra-user-lib": [
-        "./dist/dekra-user-lib"
-      ]
+      "dekra-user-lib": ["./dist/dekra-user-lib"],
+      "@user/*": ["./src/app/user/*"],
+      "@env/*": ["./src/environments/*"],
+      "@shared/*": ["./src/app/shared/*"]
     },
     "outDir": "./dist/out-tsc",
     "strict": true,

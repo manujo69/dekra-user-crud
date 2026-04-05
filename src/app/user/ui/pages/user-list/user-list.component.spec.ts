@@ -6,9 +6,9 @@ import { Sort } from '@angular/material/sort';
 import { of, throwError, Subject } from 'rxjs';
 
 import { UserListComponent } from './user-list.component';
-import { UserRepository } from '../../../domain/user.repository';
-import { User } from '../../../domain/user.model';
-import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { UserRepository } from '@user/domain/user.repository';
+import { User } from '@user/domain/user.model';
+import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confirm-dialog.component';
 
 const mockUsers: User[] = [
   {

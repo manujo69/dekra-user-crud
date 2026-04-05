@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import {
   ConfirmDialogComponent,
   ConfirmDialogData,
-} from '../../../shared/components/confirm-dialog/confirm-dialog.component';
+} from '@shared/components/confirm-dialog/confirm-dialog.component';
 
 export interface HasUnsavedChanges {
   isDirty(): boolean;

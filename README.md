@@ -1,59 +1,174 @@
-# DekraUserCrud
+# DEKRA User CRUD
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.23.
+User management app built with Angular 20. Supports listing, creating, editing, viewing and deleting users, with form validation and unsaved-changes protection.
 
-## Development server
+## Requirements
 
-To start a local development server, run:
+- **[Volta](https://volta.sh)** — manages the Node version automatically. Install it and it will pick up `node@22.22.1` from `package.json` on first use.
+- **Angular CLI** — `npm install -g @angular/cli`
 
-```bash
-ng serve
+## Stack
+
+- **Angular 20** — standalone components, signals, OnPush
+- **Angular Material 20** — UI components
+- **TypeScript 5.9**
+- **SCSS**
+
+## Structure
+
+Angular workspace with two projects: the main app and a reusable internal library.
+
+```
+dekra-user-crud/
+├── src/
+│   └── app/
+│       ├── shared/
+│       │   └── components/
+│       │       ├── header/           # Global app header
+│       │       └── confirm-dialog/   # Reusable confirmation dialog
+│       └── user/                     # User feature (DDD-layered)
+│           ├── domain/               # Business rules: models, abstract repository
+│           ├── infrastructure/
+│           │   ├── mock-repository/  # In-memory implementation with simulated delays
+│           │   └── http-repository/  # HTTP implementation (provisional — no backend yet)
+│           │       ├── user-http.dto.ts    # API response shape (snake_case)
+│           │       ├── user.mapper.ts      # DTO ↔ domain mapper
+│           │       └── user-http.repository.ts
+│           ├── application/          # Use cases: form schema definition
+│           └── ui/
+│               ├── pages/
+│               │   ├── user-list/    # Table with filter and sort
+│               │   ├── user-detail/  # Read-only detail view
+│               │   └── user-form/    # Create and edit form
+│               └── guards/           # Unsaved changes route guard
+└── projects/
+    └── dekra-user-lib/               # Internal Angular library
+        └── src/lib/
+            ├── components/
+            │   ├── dynamic-form/     # Form renderer from JSON schema
+            │   └── dynamic-field/    # Individual field component
+            ├── services/             # Form building logic
+            └── models/               # Schema interfaces
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+The data layer is split into two infrastructure adapters, both implementing the `UserRepository` domain port:
 
-## Code scaffolding
+- **`mock-repository/`** — in-memory implementation used during development (`environment.useMock = true`)
+- **`http-repository/`** — HTTP implementation using `HttpClient`, active when `environment.useMock = false`
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+The active adapter is swapped in `app.config.ts` via Angular DI with no changes to the domain or UI layers. Path aliases (`@user/*`, `@env/*`) are configured in `tsconfig.json` to avoid deep relative imports.
 
-```bash
-ng generate component component-name
+### SCSS
+
+```
+src/
+├── styles.scss                   # Global styles and Angular Material setup
+└── app/shared/scss/
+    └── common.scss               # Shared SCSS variables and mixins
+                                  # (colors, typography, spacing, icon-button-gap…)
+
+projects/dekra-user-lib/src/lib/styles/
+└── _theme.scss                   # .dekra theme class — defines CSS custom properties
+                                  # for theming the library from the consuming app
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Components import `common.scss` via `@use`. The library exposes CSS custom properties (e.g. `--dekra-form-description-color`, `--dekra-field-margin-bottom`) with their default values defined inside the `.dekra` class in `_theme.scss`. To apply or override the theme, add the class to a wrapper element or to `body` and redefine the desired variables.
+
+## Getting started
 
 ```bash
-ng generate --help
+# 1. Clone the repository
+git clone <repo-url>
+cd dekra-user-crud
+
+# 2. Install dependencies (Volta will pin Node automatically)
+npm install
+
+# 3. Start the dev server
+npm start
 ```
 
-## Building
+Open `http://localhost:4200` in your browser. The app uses a mock repository, so no backend is needed.
 
-To build the project run:
+### Working with the library
+
+If you modify `dekra-user-lib`, rebuild it before the changes are reflected in the app:
 
 ```bash
-ng build
+# One-time build
+npm run build-lib
+
+# Or watch mode (rebuilds on every change)
+npm run watch-lib
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Testing
 
-## Running unit tests
+Tests are written with **Jasmine** and run via **Karma** + ChromeHeadless.
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+The `pre-commit` hook enforces that all tests pass before any commit is accepted.
 
-```bash
-ng test
+### Coverage thresholds
+
+The main app enforces the following minimums:
+
+| Metric | Minimum |
+|--------|---------|
+| Statements | 90% |
+| Branches | 85% |
+| Functions | 90% |
+| Lines | 90% |
+
+The build fails if any threshold is not met. Reports are generated in `coverage/dekra-user-crud/`.
+
+The library (`dekra-user-lib`) has its own test suite but no enforced threshold yet.
+
+## Code quality
+
+### Prettier
+Used for consistent formatting. Run manually with `npm run format`, or check without fixing with `npm run format:check`.
+
+### ESLint
+Configured with `angular-eslint`. Run with `npm run lint`.
+
+### Husky
+Git hooks are managed by Husky and set up automatically on `npm install` via the `prepare` script.
+
+The `pre-commit` hook runs the full test suite and lint before every commit:
+```
+npm run test:coverage
+npm run lint
 ```
 
-## Running end-to-end tests
+The `preinstall` script (`scripts/check-volta.js`) warns if Volta is not installed on the system.
 
-For end-to-end (e2e) testing, run:
+## Branching strategy
 
-```bash
-ng e2e
-```
+- `master` — stable branch, reflects the latest working state
+- Feature branches follow the pattern `feature/<description>`
+- No enforced commit message convention (no commitlint configured)
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Architecture decisions
 
-## Additional Resources
+- **Signals over NgRx** — the app state is local to the feature and simple enough that Angular signals with `OnPush` cover all needs without the overhead of a global store.
+- **Abstract repository pattern** — `UserRepository` is an abstract class injected via DI. Two implementations exist: `UserMockRepository` (default) and `UserHttpRepository`. Switching between them is controlled by `environment.useMock` in `app.config.ts`, with no changes to the domain or UI layers.
+- **HTTP repository (provisional)** — `UserHttpRepository` is implemented and wired up, but no real backend exists yet. It targets `environment.apiUrl` and includes a DTO layer (`UserDto`) and a mapper to keep the domain model independent of the API shape. It is inactive by default (`useMock: true`).
+- **Internal library (`dekra-user-lib`)** — the dynamic form logic is extracted into a separate Angular library to keep it independently testable and reusable across projects. It is built separately and consumed as a package.
+- **No backend** — the app runs on mock data by default. No JSON Server or MSW is configured; the mock repository simulates async delays internally.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Known limitations / tech debt
+
+- `UserHttpRepository` is implemented but provisional — no real backend exists yet. Activating it (`useMock: false`) will fail until an API is available at `environment.apiUrl`
+- `dekra-user-lib` test runner requires additional setup (`ng generate library` infrastructure) to run reliably — see `projects/dekra-user-lib/karma.conf.js`
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm start` | Dev server at `localhost:4200` |
+| `npm run build` | Production build |
+| `npm test` | Unit tests |
+| `npm run test:coverage` | Unit tests with coverage |
+| `npm run build-lib` | Build the library |
+| `npm run lint` | ESLint |
+| `npm run format` | Prettier |

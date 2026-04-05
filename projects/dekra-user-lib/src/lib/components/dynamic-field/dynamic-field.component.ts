@@ -39,6 +39,8 @@ export class DynamicFieldComponent {
   getErrorMessage(): string {
     if (!this.control.errors) return '';
 
+    // Shows only the first active error. Avoid defining overlapping
+    // validators on the same field in the schema.
     const errorKey = Object.keys(this.control.errors)[0];
 
     if (this.config.errorMessage?.[errorKey]) {

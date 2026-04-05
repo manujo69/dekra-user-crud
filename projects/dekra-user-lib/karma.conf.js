@@ -23,6 +23,14 @@ module.exports = function (config) {
       dir: require('path').join(__dirname, '../../coverage/dekra-user-lib'),
       subdir: '.',
       reporters: [{ type: 'html' }, { type: 'text-summary' }],
+      check: {
+        global: {
+          statements: 90,
+          branches: 85,
+          functions: 90,
+          lines: 90,
+        },
+      },
     },
     reporters: ['progress', 'kjhtml'],
     port: 9876,

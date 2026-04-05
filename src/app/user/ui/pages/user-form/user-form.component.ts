@@ -9,10 +9,11 @@ import {
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DynamicFormComponent } from 'dekra-user-lib';
-import { User, UserFormData } from '../../../domain/user.model';
-import { getUserFormSchema } from '../../../application/user-form.schema';
-import { HasUnsavedChanges } from '../../guards/unsaved-changes.guard';
-import { UserRepository } from '../../../domain/user.repository';
+import { User, UserFormData } from '@user/domain/user.model';
+import { getUserFormSchema } from '@user/application/user-form.schema';
+import { HasUnsavedChanges } from '@user/ui/guards/unsaved-changes.guard';
+import { UserRepository } from '@user/domain/user.repository';
+import { USER_MESSAGES } from '@user/constants/user-messages';
 
 @Component({
   selector: 'app-user-form',
@@ -62,7 +63,7 @@ export class UserFormComponent implements OnInit, HasUnsavedChanges {
       },
       error: err => {
         console.error('Error loading user:', err);
-        this.snackBar.open('User not found', 'Close', { duration: 4000 });
+        this.snackBar.open(USER_MESSAGES.errors.notFound, 'Close', { duration: 4000 });
         this.router.navigate(['/users']);
       },
     });
@@ -82,12 +83,12 @@ export class UserFormComponent implements OnInit, HasUnsavedChanges {
     this.userRepository.create(formData).subscribe({
       next: () => {
         this.submitted.set(true);
-        this.snackBar.open('User created', 'Close', { duration: 3000 });
+        this.snackBar.open(USER_MESSAGES.success.created, 'Close', { duration: 3000 });
         this.router.navigate(['/users']);
       },
       error: err => {
         console.error('Error creating user:', err);
-        this.snackBar.open('Error creating user', 'Close', { duration: 4000 });
+        this.snackBar.open(USER_MESSAGES.errors.createError, 'Close', { duration: 4000 });
         this.loading.set(false);
       },
     });
@@ -97,12 +98,12 @@ export class UserFormComponent implements OnInit, HasUnsavedChanges {
     this.userRepository.update(id, formData).subscribe({
       next: () => {
         this.submitted.set(true);
-        this.snackBar.open('User updated', 'Close', { duration: 3000 });
+        this.snackBar.open(USER_MESSAGES.success.updated, 'Close', { duration: 3000 });
         this.router.navigate(['/users']);
       },
       error: err => {
         console.error('Error updating user:', err);
-        this.snackBar.open('Error updating user', 'Close', { duration: 4000 });
+        this.snackBar.open(USER_MESSAGES.errors.updateError, 'Close', { duration: 4000 });
         this.loading.set(false);
       },
     });

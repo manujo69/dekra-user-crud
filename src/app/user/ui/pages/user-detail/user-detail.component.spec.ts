@@ -5,9 +5,9 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { of, throwError, Subject } from 'rxjs';
 
 import { UserDetailComponent } from './user-detail.component';
-import { UserRepository } from '../../../domain/user.repository';
-import { User } from '../../../domain/user.model';
-import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { UserRepository } from '@user/domain/user.repository';
+import { User } from '@user/domain/user.model';
+import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confirm-dialog.component';
 
 const mockUser: User = {
   id: '1',

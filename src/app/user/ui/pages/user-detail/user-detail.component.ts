@@ -8,9 +8,10 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import { UserRepository } from '../../../domain/user.repository';
-import { User } from '../../../domain/user.model';
-import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { UserRepository } from '@user/domain/user.repository';
+import { User } from '@user/domain/user.model';
+import { USER_MESSAGES } from '@user/constants/user-messages';
+import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-user-detail',
@@ -57,7 +58,7 @@ export class UserDetailComponent implements OnInit {
       },
       error: err => {
         console.error('Error loading user:', err);
-        this.snackBar.open('User not found', 'Close', { duration: 4000 });
+        this.snackBar.open(USER_MESSAGES.errors.notFound, 'Close', { duration: 4000 });
         this.router.navigate(['/users']);
       },
     });
@@ -80,9 +81,9 @@ export class UserDetailComponent implements OnInit {
 
     const ref = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        title: 'Delete user',
+        title: USER_MESSAGES.deleteDialog.title,
         message: `Are you sure you want to delete "${user.username}"?`,
-        confirmLabel: 'Delete',
+        confirmLabel: USER_MESSAGES.deleteDialog.confirmLabel,
       },
     });
 
@@ -91,12 +92,12 @@ export class UserDetailComponent implements OnInit {
 
       this.userRepository.delete(user.id).subscribe({
         next: () => {
-          this.snackBar.open('User deleted', 'Close', { duration: 3000 });
+          this.snackBar.open(USER_MESSAGES.success.deleted, 'Close', { duration: 3000 });
           this.router.navigate(['/users']);
         },
         error: err => {
           console.error('Error deleting user:', err);
-          this.snackBar.open('Error deleting user', 'Close', { duration: 4000 });
+          this.snackBar.open(USER_MESSAGES.errors.deleteError, 'Close', { duration: 4000 });
         },
       });
     });

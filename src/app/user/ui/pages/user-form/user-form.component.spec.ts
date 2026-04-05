@@ -4,8 +4,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { of, throwError } from 'rxjs';
 
 import { UserFormComponent } from './user-form.component';
-import { UserRepository } from '../../../domain/user.repository';
-import { User, UserFormData } from '../../../domain/user.model';
+import { UserRepository } from '@user/domain/user.repository';
+import { User, UserFormData } from '@user/domain/user.model';
 
 const mockUser: User = {
   id: '1',

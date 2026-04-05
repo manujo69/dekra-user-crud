@@ -1,6 +1,6 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { UserMockRepository } from './user-mock.repository';
-import { User, UserFormData } from '../../domain/user.model';
+import { User, UserFormData } from '@user/domain/user.model';
 
 describe('UserMockRepository', () => {
   let repository: UserMockRepository;
@@ -17,7 +17,7 @@ describe('UserMockRepository', () => {
       let result: User | undefined;
 
       repository.getById('1').subscribe(user => (result = user));
-      tick(200);
+      tick(400);
 
       expect(result?.username).toBe('jdoe');
     }));
@@ -65,7 +65,7 @@ describe('UserMockRepository', () => {
 
       let users: User[] = [];
       repository.getAll().subscribe(u => (users = u));
-      tick(300);
+      tick(400);
 
       expect(users.length).toBe(4);
       expect(users.find(u => u.username === 'newuser')).toBeTruthy();
@@ -95,11 +95,11 @@ describe('UserMockRepository', () => {
   describe('delete', () => {
     it('should remove the user from the list', fakeAsync(() => {
       repository.delete('1').subscribe();
-      tick(300);
+      tick(400);
 
       let users: User[] = [];
       repository.getAll().subscribe(u => (users = u));
-      tick(300);
+      tick(400);
 
       expect(users.find(u => u.id === '1')).toBeUndefined();
       expect(users.length).toBe(2);
