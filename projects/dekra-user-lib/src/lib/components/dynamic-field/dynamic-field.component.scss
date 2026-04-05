@@ -1,6 +1,6 @@
 :host {
   display: block;
-  margin-bottom: 16px;
+  margin-bottom: var(--dekra-field-margin-bottom, 16px);
 }
 
 .full-width {

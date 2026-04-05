@@ -4,5 +4,8 @@
   "lib": {
     "entryFile": "src/public-api.ts",
     "styleIncludePaths": ["src/lib"]
-  }
+  },
+  "assets": [
+    "src/lib/styles/_theme.scss"
+  ]
 }

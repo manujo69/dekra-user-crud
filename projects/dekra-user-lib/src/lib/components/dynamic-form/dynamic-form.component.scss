@@ -1,4 +1,8 @@
 .form-description {
-  margin-bottom: 2rem;
-  color: #666;
+  margin-bottom: var(--dekra-form-description-margin-bottom, 2rem);
+  color: var(--dekra-form-description-color, #666);
+}
+
+.form-actions button {
+  margin-right: var(--dekra-form-actions-button-gap, 20px);
 }
