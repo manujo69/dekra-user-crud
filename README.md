@@ -34,12 +34,12 @@ dekra-user-crud/
 │           │       ├── user-http.dto.ts    # API response shape (snake_case)
 │           │       ├── user.mapper.ts      # DTO ↔ domain mapper
 │           │       └── user-http.repository.ts
-│           ├── application/          # Use cases: form schema definition
 │           └── ui/
 │               ├── pages/
 │               │   ├── user-list/    # Table with filter and sort
 │               │   ├── user-detail/  # Read-only detail view
 │               │   └── user-form/    # Create and edit form
+│               │       └── user-form.schema.ts  # Form schema (presentation concern)
 │               └── guards/           # Unsaved changes route guard
 └── projects/
     └── dekra-user-lib/               # Internal Angular library
@@ -57,6 +57,16 @@ The data layer is split into two infrastructure adapters, both implementing the 
 - **`http-repository/`** — HTTP implementation using `HttpClient`, active when `environment.useMock = false`
 
 The active adapter is swapped in `app.config.ts` via Angular DI with no changes to the domain or UI layers. Path aliases (`@user/*`, `@env/*`) are configured in `tsconfig.json` to avoid deep relative imports.
+
+### DDD decisions
+
+The feature follows a lightweight DDD structure with three explicit layers:
+
+- **Domain** — `User` model and `UserRepository` abstract class. No framework dependencies. The abstract class acts as a port: the domain defines the contract, infrastructure fulfills it.
+- **Infrastructure** — concrete implementations of `UserRepository`. Each adapter has its own DTO and mapper to translate between the API shape and the domain model, keeping the domain free of external concerns.
+- **UI** — components, guards and form schemas. Form schemas live here because they are a presentation concern — they define how a form looks, not what the business does.
+
+There is no `application/` layer. In DDD, that layer is responsible for orchestrating use cases. Since the current operations are simple CRUD with no business rules beyond the domain model, introducing use case classes would add indirection without value. If business logic grows (e.g. validation rules, multi-step workflows), an `application/` layer with explicit use cases would be the right place to put it.
 
 ### SCSS
 

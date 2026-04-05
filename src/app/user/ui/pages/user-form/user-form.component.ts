@@ -10,7 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DynamicFormComponent } from 'dekra-user-lib';
 import { User, UserFormData } from '@user/domain/user.model';
-import { getUserFormSchema } from '@user/application/user-form.schema';
+import { getUserFormSchema } from '@user/ui/pages/user-form/user-form.schema';
 import { HasUnsavedChanges } from '@user/ui/guards/unsaved-changes.guard';
 import { UserRepository } from '@user/domain/user.repository';
 import { USER_MESSAGES } from '@user/user-messages';
