@@ -1,4 +1,17 @@
-@if (config.type === 'boolean') {
+@if (config.widget === 'datepicker') {
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ config.title }}</mat-label>
+    <input matInput [matDatepicker]="picker" [formControl]="control" [placeholder]="config.placeholder || ''" />
+    <mat-datepicker-toggle matIconSuffix [for]="picker" />
+    <mat-datepicker #picker />
+    @if (config.description && !control.errors) {
+      <mat-hint>{{ config.description }}</mat-hint>
+    }
+    @if (control.invalid && control.touched) {
+      <mat-error>{{ getErrorMessage() }}</mat-error>
+    }
+  </mat-form-field>
+} @else if (config.type === 'boolean') {
   <mat-checkbox [formControl]="control">
     {{ config.title }}
   </mat-checkbox>

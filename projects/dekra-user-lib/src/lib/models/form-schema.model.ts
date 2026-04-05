@@ -3,7 +3,7 @@ export type JsonSchemaType = 'string' | 'number' | 'boolean' | 'integer';
 
 export type JsonSchemaFormat = 'email' | 'password' | 'tel' | 'url' | 'date' | 'date-time';
 
-export type WidgetType = 'text' | 'textarea' | 'number' | 'checkbox' | 'select' | 'radio' | 'date';
+export type WidgetType = 'text' | 'textarea' | 'number' | 'checkbox' | 'select' | 'radio' | 'datepicker';
 
 export type FieldValue = string | number | boolean | null;
 
