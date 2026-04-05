@@ -163,8 +163,17 @@ The `preinstall` script (`scripts/check-volta.js`) warns if Volta is not install
 | ----------------------- | ------------------------------ |
 | `npm start`             | Dev server at `localhost:4200` |
 | `npm run build`         | Production build               |
-| `npm test`              | Unit tests                     |
-| `npm run test:coverage` | Unit tests with coverage       |
 | `npm run build-lib`     | Build the library              |
 | `npm run lint`          | ESLint                         |
 | `npm run format`        | Prettier                       |
+
+### Testing
+
+| Command                          | Description                          |
+| -------------------------------- | ------------------------------------ |
+| `npm test`                       | Unit tests                           |
+| `npm run test:coverage`          | Unit tests with coverage             |
+| `npm run test:coverage:open`     | Coverage + open HTML report          |
+| `npm run test-lib`               | Library unit tests                   |
+| `npm run test-lib:coverage`      | Library tests with coverage          |
+| `npm run test-lib:coverage:open` | Library coverage + open HTML report  |
