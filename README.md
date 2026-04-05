@@ -72,6 +72,8 @@ projects/dekra-user-lib/src/lib/styles/
                                   # for theming the library from the consuming app
 ```
 
+Color names (e.g. `$haiti-blue`) are resolved using **[Name that Color](https://chir.ag/projects/name-that-color)** — paste a hex value and get a human-readable name. This avoids anonymous hex literals scattered across the codebase: every color is defined once by name in `styles.scss` or `common.scss`, and the rest of the code references the variable.
+
 Components import `common.scss` via `@use`. The library exposes CSS custom properties (e.g. `--dekra-form-description-color`, `--dekra-field-margin-bottom`) with their default values defined inside the `.dekra` class in `_theme.scss`. To apply or override the theme, add the class to a wrapper element or to `body` and redefine the desired variables.
 
 ## Getting started

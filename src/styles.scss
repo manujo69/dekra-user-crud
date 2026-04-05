@@ -19,11 +19,19 @@ body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
+// Name the color: https://chir.ag/projects/name-that-color
+$haiti-blue: #100c33;
+$base-color: $haiti-blue;
+
+$disabled-text-color: rgba($base-color, 0.38);
+$disabled-container-color: rgba($base-color, 0.08);
+$disabled-outline-color: rgba($base-color, 0.26);
+
 :root {
-  --mat-button-protected-disabled-container-color: rgba(0, 0, 0, 0.08);
-  --mat-button-protected-disabled-label-text-color: rgba(0, 0, 0, 0.38);
-  --mat-button-filled-disabled-container-color: rgba(0, 0, 0, 0.08);
-  --mat-button-filled-disabled-label-text-color: rgba(0, 0, 0, 0.38);
-  --mat-button-outlined-disabled-outline-color: rgba(0, 0, 0, 0.26);
-  --mat-button-outlined-disabled-label-text-color: rgba(0, 0, 0, 0.38);
+  --mat-button-protected-disabled-container-color: #{$disabled-container-color};
+  --mat-button-protected-disabled-label-text-color: #{$disabled-text-color};
+  --mat-button-filled-disabled-container-color: #{$disabled-container-color};
+  --mat-button-filled-disabled-label-text-color: #{$disabled-text-color};
+  --mat-button-outlined-disabled-outline-color: #{$disabled-outline-color};
+  --mat-button-outlined-disabled-label-text-color: #{$disabled-text-color};
 }
