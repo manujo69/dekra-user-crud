@@ -1,6 +1,6 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { UserMockRepository } from './user-mock.repository';
-import { User, UserFormData } from '../../domain/models/user.model';
+import { User, UserFormData } from '../../domain/user.model';
 
 describe('UserMockRepository', () => {
   let repository: UserMockRepository;

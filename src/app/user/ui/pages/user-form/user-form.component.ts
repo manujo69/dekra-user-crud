@@ -1,11 +1,18 @@
-import { Component, OnInit, inject, signal, viewChild, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  inject,
+  signal,
+  viewChild,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DynamicFormComponent } from 'dekra-user-lib';
-import { UserRepository } from '../../../domain/ports/user.repository';
-import { User, UserFormData } from '../../../domain/models/user.model';
-import { USER_FORM_SCHEMA } from '../../../application/config/user-form.schema';
+import { User, UserFormData } from '../../../domain/user.model';
+import { getUserFormSchema } from '../../../application/user-form.schema';
 import { HasUnsavedChanges } from '../../guards/unsaved-changes.guard';
+import { UserRepository } from '../../../domain/user.repository';
 
 @Component({
   selector: 'app-user-form',
@@ -23,7 +30,7 @@ export class UserFormComponent implements OnInit, HasUnsavedChanges {
 
   readonly dynamicForm = viewChild(DynamicFormComponent);
 
-  formSchema = USER_FORM_SCHEMA;
+  formSchema = getUserFormSchema('create');
   isEditMode = signal(false);
   userId = signal<string | null>(null);
   loading = signal(false);
@@ -38,6 +45,7 @@ export class UserFormComponent implements OnInit, HasUnsavedChanges {
     const id = this.route.snapshot.paramMap.get('id');
 
     if (id) {
+      this.formSchema = getUserFormSchema('edit');
       this.isEditMode.set(true);
       this.userId.set(id);
       this.loadUser(id);

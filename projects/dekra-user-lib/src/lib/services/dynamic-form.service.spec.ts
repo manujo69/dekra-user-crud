@@ -1,12 +1,17 @@
 import { TestBed } from '@angular/core/testing';
 import { DynamicFormService } from './dynamic-form.service';
 import { FormSchema } from '../models/form-schema.model';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('DynamicFormService', () => {
   let service: DynamicFormService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      teardown: { destroyAfterEach: true },
+      imports: [ReactiveFormsModule],
+      providers: [DynamicFormService],
+    });
     service = TestBed.inject(DynamicFormService);
   });
 

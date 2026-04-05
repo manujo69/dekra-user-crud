@@ -3,6 +3,9 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "types": [
+      "jasmine"
+    ],
     "paths": {
       "dekra-user-lib": [
         "./dist/dekra-user-lib"

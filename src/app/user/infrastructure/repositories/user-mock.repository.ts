@@ -3,8 +3,8 @@
 import { Injectable, signal } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { delay } from 'rxjs/operators';
-import { UserRepository } from '../../domain/ports/user.repository';
-import { User, UserFormData } from '../../domain/models/user.model';
+import { UserRepository } from '../../domain/user.repository';
+import { User, UserFormData } from '../../domain/user.model';
 import { users_mock } from './user-mock.data';
 
 @Injectable()

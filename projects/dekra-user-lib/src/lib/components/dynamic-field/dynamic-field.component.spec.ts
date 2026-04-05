@@ -1,7 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { DynamicFieldComponent } from './dynamic-field.component';
 import { JsonSchemaProperty } from '../../models/form-schema.model';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 describe('DynamicFieldComponent', () => {
   let component: DynamicFieldComponent;
@@ -9,7 +14,16 @@ describe('DynamicFieldComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DynamicFieldComponent],
+      teardown: { destroyAfterEach: true },
+      imports: [
+        DynamicFieldComponent,
+        CommonModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatCheckboxModule,
+      ],
+      providers: [provideNoopAnimations()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DynamicFieldComponent);

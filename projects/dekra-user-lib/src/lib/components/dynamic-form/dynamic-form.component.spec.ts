@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DynamicFormComponent } from './dynamic-form.component';
 import { FormSchema } from '../../models/form-schema.model';
+import { DynamicFieldComponent } from '../dynamic-field/dynamic-field.component';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 
 describe('DynamicFormComponent', () => {
   let component: DynamicFormComponent<unknown>;
@@ -8,7 +12,14 @@ describe('DynamicFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DynamicFormComponent],
+      teardown: { destroyAfterEach: true },
+      imports: [
+        DynamicFormComponent,
+        CommonModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        DynamicFieldComponent,
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DynamicFormComponent<unknown>);
@@ -80,7 +91,8 @@ describe('DynamicFormComponent', () => {
     });
 
     it('should be disabled when the form is pristine (no changes yet)', () => {
-      const button: HTMLButtonElement = fixture.nativeElement.querySelector('button[type="submit"]');
+      const button: HTMLButtonElement =
+        fixture.nativeElement.querySelector('button[type="submit"]');
 
       expect(button.disabled).toBeTrue();
     });
@@ -89,7 +101,8 @@ describe('DynamicFormComponent', () => {
       component.formGroup.markAsDirty();
       fixture.detectChanges();
 
-      const button: HTMLButtonElement = fixture.nativeElement.querySelector('button[type="submit"]');
+      const button: HTMLButtonElement =
+        fixture.nativeElement.querySelector('button[type="submit"]');
 
       expect(button.disabled).toBeFalse();
     });

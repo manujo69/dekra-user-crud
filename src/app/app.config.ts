@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 import { routes } from './app.routes';
-import { UserRepository } from './user/domain/ports/user.repository';
+import { UserRepository } from './user/domain/user.repository';
 import { UserMockRepository } from './user/infrastructure/repositories/user-mock.repository';
 
 export const appConfig: ApplicationConfig = {

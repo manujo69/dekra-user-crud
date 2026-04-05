@@ -12,7 +12,12 @@
   }
 
   <div class="form-actions">
-    <button mat-raised-button color="primary" type="submit" [disabled]="formGroup.invalid || formGroup.pristine">
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="formGroup.invalid || formGroup.pristine"
+    >
       {{ submitLabel }}
     </button>
 

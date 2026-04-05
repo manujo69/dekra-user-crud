@@ -6,8 +6,8 @@ import { Sort } from '@angular/material/sort';
 import { of, throwError, Subject } from 'rxjs';
 
 import { UserListComponent } from './user-list.component';
-import { UserRepository } from '../../../domain/ports/user.repository';
-import { User } from '../../../domain/models/user.model';
+import { UserRepository } from '../../../domain/user.repository';
+import { User } from '../../../domain/user.model';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 
 const mockUsers: User[] = [
@@ -211,13 +211,19 @@ describe('UserListComponent', () => {
     });
 
     it('should preserve relative order when two users have equal values (asc)', () => {
-      component.users.set([{ ...mockUsers[0], age: 30 }, { ...mockUsers[1], age: 30 }]);
+      component.users.set([
+        { ...mockUsers[0], age: 30 },
+        { ...mockUsers[1], age: 30 },
+      ]);
       component.onSortChange({ active: 'age', direction: 'asc' } as Sort);
       expect(component.displayedUsers().map(u => u.age)).toEqual([30, 30]);
     });
 
     it('should preserve relative order when two users have equal values (desc)', () => {
-      component.users.set([{ ...mockUsers[0], age: 30 }, { ...mockUsers[1], age: 30 }]);
+      component.users.set([
+        { ...mockUsers[0], age: 30 },
+        { ...mockUsers[1], age: 30 },
+      ]);
       component.onSortChange({ active: 'age', direction: 'desc' } as Sort);
       expect(component.displayedUsers().map(u => u.age)).toEqual([30, 30]);
     });
