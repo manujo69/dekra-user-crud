@@ -86,7 +86,10 @@ cd dekra-user-crud
 # 2. Install dependencies (Volta will pin Node automatically)
 npm install
 
-# 3. Start the dev server
+# 3. Build the library (required before first run)
+npm run build-lib
+
+# 4. Start the dev server
 npm start
 ```
 
