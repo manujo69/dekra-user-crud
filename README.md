@@ -112,12 +112,12 @@ The `pre-commit` hook enforces that all tests pass before any commit is accepted
 
 The main app enforces the following minimums:
 
-| Metric | Minimum |
-|--------|---------|
-| Statements | 90% |
-| Branches | 85% |
-| Functions | 90% |
-| Lines | 90% |
+| Metric     | Minimum |
+| ---------- | ------- |
+| Statements | 90%     |
+| Branches   | 85%     |
+| Functions  | 90%     |
+| Lines      | 90%     |
 
 The build fails if any threshold is not met. Reports are generated in `coverage/dekra-user-crud/`.
 
@@ -126,15 +126,19 @@ The library (`dekra-user-lib`) has its own test suite but no enforced threshold 
 ## Code quality
 
 ### Prettier
+
 Used for consistent formatting. Run manually with `npm run format`, or check without fixing with `npm run format:check`.
 
 ### ESLint
+
 Configured with `angular-eslint`. Run with `npm run lint`.
 
 ### Husky
+
 Git hooks are managed by Husky and set up automatically on `npm install` via the `prepare` script.
 
 The `pre-commit` hook runs the full test suite and lint before every commit:
+
 ```
 npm run test:coverage
 npm run lint
@@ -148,27 +152,14 @@ The `preinstall` script (`scripts/check-volta.js`) warns if Volta is not install
 - Feature branches follow the pattern `feature/<description>`
 - No enforced commit message convention (no commitlint configured)
 
-## Architecture decisions
-
-- **Signals over NgRx** — the app state is local to the feature and simple enough that Angular signals with `OnPush` cover all needs without the overhead of a global store.
-- **Abstract repository pattern** — `UserRepository` is an abstract class injected via DI. Two implementations exist: `UserMockRepository` (default) and `UserHttpRepository`. Switching between them is controlled by `environment.useMock` in `app.config.ts`, with no changes to the domain or UI layers.
-- **HTTP repository (provisional)** — `UserHttpRepository` is implemented and wired up, but no real backend exists yet. It targets `environment.apiUrl` and includes a DTO layer (`UserDto`) and a mapper to keep the domain model independent of the API shape. It is inactive by default (`useMock: true`).
-- **Internal library (`dekra-user-lib`)** — the dynamic form logic is extracted into a separate Angular library to keep it independently testable and reusable across projects. It is built separately and consumed as a package.
-- **No backend** — the app runs on mock data by default. No JSON Server or MSW is configured; the mock repository simulates async delays internally.
-
-## Known limitations / tech debt
-
-- `UserHttpRepository` is implemented but provisional — no real backend exists yet. Activating it (`useMock: false`) will fail until an API is available at `environment.apiUrl`
-- `dekra-user-lib` test runner requires additional setup (`ng generate library` infrastructure) to run reliably — see `projects/dekra-user-lib/karma.conf.js`
-
 ## Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm start` | Dev server at `localhost:4200` |
-| `npm run build` | Production build |
-| `npm test` | Unit tests |
-| `npm run test:coverage` | Unit tests with coverage |
-| `npm run build-lib` | Build the library |
-| `npm run lint` | ESLint |
-| `npm run format` | Prettier |
+| Command                 | Description                    |
+| ----------------------- | ------------------------------ |
+| `npm start`             | Dev server at `localhost:4200` |
+| `npm run build`         | Production build               |
+| `npm test`              | Unit tests                     |
+| `npm run test:coverage` | Unit tests with coverage       |
+| `npm run build-lib`     | Build the library              |
+| `npm run lint`          | ESLint                         |
+| `npm run format`        | Prettier                       |
