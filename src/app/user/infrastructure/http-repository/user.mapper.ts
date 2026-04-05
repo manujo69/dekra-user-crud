@@ -1,3 +1,6 @@
+// NOTE: In this project the DTO and domain model are nearly identical and the mapper
+// is not strictly necessary. It is included to illustrate the pattern and to prepare
+// for future API changes without touching the domain or UI layers.
 import { User, UserFormData } from '@user/domain/user.model';
 import { UserDto } from './user-http.dto';
 
