@@ -2,19 +2,29 @@
 
 const { execSync } = require('child_process');
 
-try {
-  execSync('volta --version', { stdio: 'ignore' });
-} catch (err) {
+const hasVolta = canRun('volta --version');
+const hasNvm = canRun('nvm --version') || canRun('. $NVM_DIR/nvm.sh && nvm --version');
+
+if (!hasVolta && !hasNvm) {
   console.warn(`
-⚠️  AVISO IMPORTANTE
+⚠️  WARNING
 
-Este proyecto está configurado para usar Volta para gestionar la versión de Node.
+This project uses Volta to manage the Node version.
 
-No se ha encontrado Volta en tu sistema.
+Neither Volta nor nvm was found on your system.
 
-Instálalo con:
+Install Volta with:
   curl https://get.volta.sh | bash
 
-O continúa bajo tu propia responsabilidad usando otra versión de Node.
+Or proceed at your own risk using a different Node version.
 `);
+}
+
+function canRun(cmd) {
+  try {
+    execSync(cmd, { stdio: 'ignore', shell: true });
+    return true;
+  } catch {
+    return false;
+  }
 }
