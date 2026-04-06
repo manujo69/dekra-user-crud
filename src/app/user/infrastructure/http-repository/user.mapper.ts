@@ -13,7 +13,7 @@ export class UserMapper {
       surnames: dto.surnames,
       email: dto.email,
       password: dto.password,
-      age: dto.age,
+      birthDate: dto.birth_date,
       active: dto.active,
       lastLogin: dto.last_login ? new Date(dto.last_login) : undefined,
       createdAt: new Date(dto.created_at),
@@ -29,7 +29,7 @@ export class UserMapper {
     if (data.name !== undefined) result['name'] = data.name;
     if (data.surnames !== undefined) result['surnames'] = data.surnames;
     if (data.email !== undefined) result['email'] = data.email;
-    if (data.age !== undefined) result['age'] = data.age;
+    if (data.birthDate !== undefined) result['birthDate'] = data.birthDate;
     if (data.active !== undefined) result['active'] = data.active;
 
     return result;

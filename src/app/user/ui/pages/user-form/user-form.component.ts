@@ -119,7 +119,7 @@ export class UserFormComponent implements OnInit, HasUnsavedChanges {
       name: user.name,
       surnames: user.surnames,
       email: user.email,
-      age: user.age,
+      birthDate: user.birthDate,
       active: user.active,
     };
   }

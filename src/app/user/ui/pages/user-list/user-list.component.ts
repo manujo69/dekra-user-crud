@@ -53,7 +53,7 @@ export class UserListComponent implements OnInit {
   loading = signal(true);
   filterValue = signal('');
   sortState = signal<Sort>({ active: '', direction: '' });
-  displayedColumns = ['username', 'name', 'email', 'age', 'active', 'actions'];
+  displayedColumns = ['username', 'name', 'email', 'birthDate', 'active', 'actions'];
 
   displayedUsers = computed(() => {
     const filter = this.filterValue().toLowerCase().trim();

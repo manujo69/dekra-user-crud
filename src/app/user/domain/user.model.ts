@@ -5,7 +5,7 @@ export interface User {
   surnames: string;
   email: string;
   password: string;
-  age: number;
+  birthDate: string;
   active: boolean;
   lastLogin?: Date;
   createdAt: Date;

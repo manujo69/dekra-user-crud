@@ -16,7 +16,7 @@ const mockUser: User = {
   surnames: 'Doe',
   email: 'john.doe@example.com',
   password: 'hashed',
-  age: 30,
+  birthDate: '1993-05-15',
   active: true,
   createdAt: new Date('2025-01-15'),
 };

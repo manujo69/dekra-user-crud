@@ -54,16 +54,15 @@ const USER_FORM_SCHEMA_BASE: FormSchema = {
       },
       order: 4,
     },
-    age: {
-      type: 'number',
-      title: 'Age',
-      minimum: 18,
-      maximum: 120,
-      placeholder: 'Enter age',
+    birthDate: {
+      type: 'string',
+      title: 'Birth Date',
+      format: 'date',
+      widget: 'datepicker',
+      placeholder: 'Enter birth date',
       errorMessage: {
-        required: 'Age is required',
-        min: 'Must be at least 18 years old',
-        max: 'Please enter a valid age',
+        required: 'Birth date is required',
+        format: 'Please enter a valid date',
       },
       order: 6,
     },
@@ -75,7 +74,7 @@ const USER_FORM_SCHEMA_BASE: FormSchema = {
       order: 7,
     },
   },
-  required: ['username', 'name', 'surnames', 'email', 'age'],
+  required: ['username', 'name', 'surnames', 'email', 'birthDate'],
 };
 
 /*

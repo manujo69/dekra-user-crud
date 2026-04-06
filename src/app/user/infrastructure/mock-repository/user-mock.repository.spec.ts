@@ -37,7 +37,7 @@ describe('UserMockRepository', () => {
       name: 'New',
       surnames: 'User',
       email: 'new@example.com',
-      age: 28,
+      birthDate: '1996-05-10',
       active: true,
     };
 

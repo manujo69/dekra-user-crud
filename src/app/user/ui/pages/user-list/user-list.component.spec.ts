@@ -18,7 +18,7 @@ const mockUsers: User[] = [
     surnames: 'Doe',
     email: 'john.doe@example.com',
     password: 'hashed1',
-    age: 30,
+    birthDate: '1993-05-15',
     active: true,
     createdAt: new Date('2025-01-15'),
   },
@@ -29,7 +29,7 @@ const mockUsers: User[] = [
     surnames: 'Smith',
     email: 'alice.smith@example.com',
     password: 'hashed2',
-    age: 25,
+    birthDate: '1998-08-20',
     active: false,
     createdAt: new Date('2025-02-20'),
   },
@@ -77,7 +77,7 @@ describe('UserListComponent', () => {
       'username',
       'name',
       'email',
-      'age',
+      'birthDate',
       'active',
       'actions',
     ]);
@@ -188,14 +188,14 @@ describe('UserListComponent', () => {
       expect(component.displayedUsers().map(u => u.username)).toEqual(['jdoe', 'asmith']);
     });
 
-    it('should sort by age ascending', () => {
-      component.onSortChange({ active: 'age', direction: 'asc' } as Sort);
-      expect(component.displayedUsers().map(u => u.age)).toEqual([25, 30]);
+    it('should sort by birthDate ascending', () => {
+      component.onSortChange({ active: 'birthDate', direction: 'asc' } as Sort);
+      expect(component.displayedUsers().map(u => u.birthDate)).toEqual(['1993-05-15', '1998-08-20']);
     });
 
-    it('should sort by age descending', () => {
-      component.onSortChange({ active: 'age', direction: 'desc' } as Sort);
-      expect(component.displayedUsers().map(u => u.age)).toEqual([30, 25]);
+    it('should sort by birthDate descending', () => {
+      component.onSortChange({ active: 'birthDate', direction: 'desc' } as Sort);
+      expect(component.displayedUsers().map(u => u.birthDate)).toEqual(['1998-08-20', '1993-05-15']);
     });
 
     it('should restore original order when sort is cleared', () => {
@@ -212,20 +212,20 @@ describe('UserListComponent', () => {
 
     it('should preserve relative order when two users have equal values (asc)', () => {
       component.users.set([
-        { ...mockUsers[0], age: 30 },
-        { ...mockUsers[1], age: 30 },
+        { ...mockUsers[0], birthDate: '1990-01-01' },
+        { ...mockUsers[1], birthDate: '1990-01-01' },
       ]);
-      component.onSortChange({ active: 'age', direction: 'asc' } as Sort);
-      expect(component.displayedUsers().map(u => u.age)).toEqual([30, 30]);
+      component.onSortChange({ active: 'birthDate', direction: 'asc' } as Sort);
+      expect(component.displayedUsers().map(u => u.birthDate)).toEqual(['1990-01-01', '1990-01-01']);
     });
 
     it('should preserve relative order when two users have equal values (desc)', () => {
       component.users.set([
-        { ...mockUsers[0], age: 30 },
-        { ...mockUsers[1], age: 30 },
+        { ...mockUsers[0], birthDate: '1990-01-01' },
+        { ...mockUsers[1], birthDate: '1990-01-01' },
       ]);
-      component.onSortChange({ active: 'age', direction: 'desc' } as Sort);
-      expect(component.displayedUsers().map(u => u.age)).toEqual([30, 30]);
+      component.onSortChange({ active: 'birthDate', direction: 'desc' } as Sort);
+      expect(component.displayedUsers().map(u => u.birthDate)).toEqual(['1990-01-01', '1990-01-01']);
     });
   });
 

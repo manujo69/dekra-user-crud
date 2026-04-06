@@ -5,7 +5,7 @@ export interface UserDto {
   surnames: string;
   email: string;
   password: string;
-  age: number;
+  birth_date: string;
   active: boolean;
   last_login: string | null;
   created_at: string;

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { provideNativeDateAdapter } from '@angular/material/core';
 import { of, throwError } from 'rxjs';
 
 import { UserFormComponent } from './user-form.component';
@@ -14,7 +15,7 @@ const mockUser: User = {
   surnames: 'Doe',
   email: 'john.doe@example.com',
   password: 'hashed',
-  age: 30,
+  birthDate: '1993-05-15',
   active: true,
   createdAt: new Date('2025-01-15'),
 };
@@ -24,7 +25,7 @@ const mockFormData: UserFormData = {
   name: 'John',
   surnames: 'Doe',
   email: 'john.doe@example.com',
-  age: 30,
+  birthDate: '1993-05-15',
   active: true,
 };
 
@@ -39,6 +40,7 @@ describe('UserFormComponent', () => {
     TestBed.configureTestingModule({
       imports: [UserFormComponent],
       providers: [
+        provideNativeDateAdapter(),
         { provide: Router, useValue: router },
         {
           provide: ActivatedRoute,
@@ -305,7 +307,7 @@ describe('UserFormComponent', () => {
       expect(formData.name).toBe('John');
       expect(formData.surnames).toBe('Doe');
       expect(formData.email).toBe('john.doe@example.com');
-      expect(formData.age).toBe(30);
+      expect(formData.birthDate).toBe('1993-05-15');
       expect(formData.active).toBeTrue();
     });
 

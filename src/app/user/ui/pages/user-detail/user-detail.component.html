@@ -26,8 +26,8 @@
             <div class="info-item">
               <mat-icon>cake</mat-icon>
               <div class="info-content">
-                <span class="label">Age</span>
-                <span class="value">{{ myUser.age }} years</span>
+                <span class="label">Birth Date</span>
+                <span class="value">{{ myUser.birthDate | date: 'mediumDate' }}</span>
               </div>
             </div>
 
@@ -45,7 +45,7 @@
               <mat-icon>calendar_today</mat-icon>
               <div class="info-content">
                 <span class="label">Created</span>
-                <span class="value">{{ myUser.createdAt | date: 'medium' }}</span>
+                <span class="value">{{ myUser.createdAt | date: 'mediumDate' }}</span>
               </div>
             </div>
 
@@ -54,7 +54,7 @@
                 <mat-icon>login</mat-icon>
                 <div class="info-content">
                   <span class="label">Last Login</span>
-                  <span class="value">{{ myUser.lastLogin | date: 'medium' }}</span>
+                  <span class="value">{{ myUser.lastLogin | date: 'mediumDate' }}</span>
                 </div>
               </div>
             }
